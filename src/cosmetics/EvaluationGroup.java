@@ -1,4 +1,4 @@
-package domain;
+package cosmetics;
 
 import java.util.List;
 import java.util.HashMap;

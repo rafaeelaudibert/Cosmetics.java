@@ -1,4 +1,4 @@
-package domain;
+package cosmetics;
 
 public class Evaluation {
 
@@ -23,7 +23,7 @@ public class Evaluation {
 			this.score = score;
 		}
 		else {
-			throw new Exception();	//Trocar por uma excessão específica depois
+			throw new Exception();	//Trocar por uma excessï¿½o especï¿½fica depois
 		}
 	}
 	

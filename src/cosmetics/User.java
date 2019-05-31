@@ -1,4 +1,4 @@
-package domain;
+package cosmetics;
 
 import java.util.List;
 import java.util.HashMap;
@@ -25,15 +25,15 @@ public class User {
 	public void addEvaluation(Evaluation evaluation) throws Exception{
 
 		if (evaluation == null){
-		  throw new Exception("Evaluation é null");
+		  throw new Exception("Evaluation ï¿½ null");
 		}
 	
 		if (!this.canEvaluate(evaluation.getProduct())){
-		  throw new Exception("Produto não pode ser avaliado por este avaliador");
+		  throw new Exception("Produto nï¿½o pode ser avaliado por este avaliador");
 		}
 		
 		if (this.evaluations.get(evaluation.getGroup()) == null){
-		  throw new Exception("Avaliador não pertence a um grupo onde este produto esteja sendo avaliado!");
+		  throw new Exception("Avaliador nï¿½o pertence a um grupo onde este produto esteja sendo avaliado!");
 		}
 	
 		this.evaluations.get(evaluation.getGroup()).add(evaluation);

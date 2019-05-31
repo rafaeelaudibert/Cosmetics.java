@@ -1,10 +1,10 @@
-package domain;
+package cosmetics_test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class EvaluationTest {
+public class ProductCategoryTest {
 
 	@Test
 	public void test() {

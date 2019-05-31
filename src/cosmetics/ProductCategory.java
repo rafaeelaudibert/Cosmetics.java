@@ -1,4 +1,4 @@
-package domain;
+package cosmetics;
 
 public class ProductCategory {
 	private String name;

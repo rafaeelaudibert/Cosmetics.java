@@ -1,4 +1,4 @@
-package domain;
+package cosmetics_test;
 
 import static org.junit.Assert.*;
 
