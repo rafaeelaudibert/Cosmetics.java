@@ -7,11 +7,11 @@ import java.util.Map;
 public class EvaluationGroup {
 
 	private String name;
-	private List<String> products;
+	private List<Product> products;
 	private List<User> members;
 	private Map<Product,List<Evaluation>> evaluations;
 	
-	public EvaluationGroup(String name,List<String> products,List<User> members) {
+	public EvaluationGroup(String name,List<Product> products,List<User> members) {
 		this.name = name;
 		this.products = products;
 		this.members = members;
@@ -50,5 +50,12 @@ public class EvaluationGroup {
 		return true;
 	}
 	
+	public List<User> getMembers(){
+		return this.members;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
 }
 

@@ -35,4 +35,7 @@ public class Evaluation {
 		return this.product;
 	}
 	
+	public User getReviewer() {
+		return this.reviewer;
+	}
 }

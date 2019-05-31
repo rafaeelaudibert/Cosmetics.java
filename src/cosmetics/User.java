@@ -22,26 +22,32 @@ public class User {
 		this.evaluations = new HashMap<>();
 		this.groups = new ArrayList<EvaluationGroup>();
 	}
-	public void addEvaluation(Evaluation evaluation) throws Exception{
+	
+	public void addEvaluation(Evaluation evaluation){
 
 		if (evaluation == null){
-		  throw new Exception("Evaluation � null");
+			throw new NullPointerException("Avaliacao null");
 		}
-	
-		if (!this.canEvaluate(evaluation.getProduct())){
-		  throw new Exception("Produto n�o pode ser avaliado por este avaliador");
+		else if (evaluation.getReviewer() != this){
+			//System.out.println("Usuarios incompativeis");
 		}
-		
-		if (this.evaluations.get(evaluation.getGroup()) == null){
-		  throw new Exception("Avaliador n�o pertence a um grupo onde este produto esteja sendo avaliado!");
+		else if (!this.canEvaluate(evaluation.getProduct())){
+			//System.out.println("Usuario e produto incompativeis");
 		}
-	
-		this.evaluations.get(evaluation.getGroup()).add(evaluation);
-		
+		else if (!this.groups.contains(evaluation.getGroup())){
+			//System.out.println("Usuario e grupo incompativeis");
+		}
+		else {
+			this.evaluations.get(evaluation.getGroup()).add(evaluation);
+		}
+
 	}
 	
 	public boolean canEvaluate(Product product){
 		if (product == null) {
+			return false;
+		}
+		if (product.getProductCategory() == null){
 			return false;
 		}
 		if (this.categories.contains(product.getProductCategory())){
@@ -49,6 +55,21 @@ public class User {
 		}
 		else {
 			return false;
+		}
+	}
+	
+	public void addEvaluationGroup(EvaluationGroup group){
+		if (!this.groups.contains(group) && group != null) {
+			int old_size = this.evaluations.size();
+			
+			this.evaluations.put(group,new ArrayList<>());
+			this.groups.add(group);
+			if(group != null) {
+				group.getMembers().add(this);
+				assert group.getMembers().contains(this);
+			}
+			
+			assert(this.evaluations.size() > old_size);
 		}
 	}
 	
@@ -62,6 +83,10 @@ public class User {
 	
 	public String getState() {
 		return this.state;
+	}
+	
+	public List<Evaluation> getEvaluations(EvaluationGroup group){
+		return this.evaluations.get(group);
 	}
 	
 	public List<EvaluationGroup> getGroups(){
