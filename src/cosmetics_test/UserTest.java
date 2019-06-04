@@ -80,11 +80,11 @@ public class UserTest {
 		userPaulo.addGroup(groupA);
 
 		// Definindo novas avalia��es e avalia��es concluidas;
-		evalJoaoCreamProduct = new Evaluation(groupB, creamProduct, userJoao);
-		evalMateusCreamProduct = new Evaluation(groupB, creamProduct, userMateus);
-		evalJoseShampooProduct = new Evaluation(groupA, shampooProduct, userJose);
-		evalJoaoCreamProductWrongGroup = new Evaluation(groupA, creamProduct, userJoao);
-		evalJoaoShampooProduct = new Evaluation(groupB, shampooProduct, userJoao);
+		evalJoaoCreamProduct = new Evaluation(userJoao, creamProduct, groupB);
+		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct, groupB);
+		evalJoseShampooProduct = new Evaluation(userJose, shampooProduct, groupA);
+		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct, groupA);
+		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct, groupB);
 	}
 
 	// Testando canEvaluate
@@ -143,24 +143,24 @@ public class UserTest {
 	@Test
 	public void addEvaluationTestWrongUser() {
 		userJoao.addEvaluation(evalMateusCreamProduct);
-		assertFalse(userJoao.getEvaluations(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
+		assertFalse(userJoao.getEvaluationsFromGroup(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
 	}
 
 	@Test
 	public void addEvaluationTestIncompatibleProduct() {
 		userJoao.addEvaluation(evalJoaoShampooProduct);
-		assertFalse(userJoao.getEvaluations(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
+		assertFalse(userJoao.getEvaluationsFromGroup(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
 	}
 
 	@Test
 	public void addEvaluationTestNotExistingGroup() {
 		userJoao.addEvaluation(evalJoaoCreamProductWrongGroup);
-		assertTrue(userJoao.getEvaluations(evalJoaoCreamProductWrongGroup.getGroup()) == null);
+		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProductWrongGroup.getGroup()) == null);
 	}
 
 	@Test
 	public void addEvaluationTestNormalAddition() {
 		userJoao.addEvaluation(evalJoaoCreamProduct);
-		assertTrue(userJoao.getEvaluations(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
+		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
 	}
 }

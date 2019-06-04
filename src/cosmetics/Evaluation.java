@@ -7,7 +7,7 @@ public class Evaluation {
 	private Product product;
 	private Group group;
 
-	public Evaluation(Group group, Product product, User reviewer) {
+	public Evaluation(User reviewer, Product product, Group group) {
 		this.group = group;
 		this.product = product;
 		this.reviewer = reviewer;
@@ -36,5 +36,9 @@ public class Evaluation {
 
 	public User getReviewer() {
 		return this.reviewer;
+	}
+	
+	public Integer getScore() {
+		return this.score;
 	}
 }

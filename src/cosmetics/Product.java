@@ -10,6 +10,7 @@ public class Product {
 	private Category category;
 	private User requester;
 	private Map<User, Evaluation> evaluations;
+	private static int ACCEPTABLE_GRADE = 0;
 
 	public Product(int id, String name, User requester, Category category) {
 		this.id = id;
@@ -27,12 +28,12 @@ public class Product {
 
 	}
 
-	public double getScoreAvg() {
+	public double getAverageScore() {
 		return 0;
 	}
 
 	public boolean isAcceptable() {
-		return true;
+		return getAverageScore() > ACCEPTABLE_GRADE;
 	}
 
 	public boolean evaluationDone() {
@@ -42,11 +43,11 @@ public class Product {
 	public Category getCategory() {
 		return this.category;
 	}
-	
+
 	public Integer getId() {
 		return this.id;
 	}
-	
+
 	public User getRequester() {
 		return this.requester;
 	}
