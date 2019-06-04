@@ -16,8 +16,8 @@ public class UserTest {
 
 	User userJoao, userJose, userPaulo, userMateus;
 	List<User> groupAMembers, groupBMembers;
-	ProductCategory cream, lotion, shampoo;
-	List<ProductCategory> categoryListEmpty, categoryListCream, categoryListCreamShampoo;
+	Category cream, lotion, shampoo;
+	List<Category> categoryListEmpty, categoryListCream, categoryListCreamShampoo;
 	Product creamProduct, lotionProduct, shampooProduct;
 	List<Product> productListEmpty, productListShampoo, productListCreamLotion;
 	EvaluationGroup groupA, groupB;
@@ -30,22 +30,28 @@ public class UserTest {
 	@Before
 	public void setUp() {
 		// Definindo categorias para teste
-		cream = new ProductCategory("creme");
-		lotion = new ProductCategory("locao");
-		shampoo = new ProductCategory("shampoo");
+		cream = new Category("creme");
+		lotion = new Category("locao");
+		shampoo = new Category("shampoo");
 
 		// Definindo listas de categorias para teste
-		categoryListEmpty = new ArrayList<ProductCategory>();
-		categoryListCream = new ArrayList<ProductCategory>(); // Cria outra lista de categorias
+		categoryListEmpty = new ArrayList<Category>();
+		categoryListCream = new ArrayList<Category>(); // Cria outra lista de categorias
 		categoryListCream.add(cream);
-		categoryListCreamShampoo = new ArrayList<ProductCategory>();
+		categoryListCreamShampoo = new ArrayList<Category>();
 		categoryListCreamShampoo.add(cream);
 		categoryListCreamShampoo.add(shampoo);
+		
+		// Definindo usu�rios para teste
+		userJoao = new User(01, "Joao", "RS", categoryListCream);
+		userMateus = new User(02, "Mateus", "BA", categoryListCream);
+		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
+		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
 		// Definindo produtos para teste
-		creamProduct = new Product(01, "Creme X", cream);
-		lotionProduct = new Product(02, "Locao Y", lotion);
-		shampooProduct = new Product(03, "Shampoo Z", shampoo);
+		creamProduct = new Product(01, "Creme X", userPaulo, cream);
+		lotionProduct = new Product(02, "Locao Y", userJose, lotion);
+		shampooProduct = new Product(03, "Shampoo Z", userJoao, shampoo);
 
 		// Definindo listas de produtos para teste;
 		productListEmpty = new ArrayList<Product>();
@@ -66,15 +72,11 @@ public class UserTest {
 		// Definindo os grupos de usuarios
 		groupA = new EvaluationGroup("Grupo A", productListShampoo, groupAMembers);
 		groupB = new EvaluationGroup("Grupo B", productListCreamLotion, groupBMembers);
-
-		// Definindo usu�rios para teste
-		userJoao = new User(01, "Joao", "RS", categoryListCream);
+		
+		// Adicionando usuários aos grupos
 		userJoao.addEvaluationGroup(groupB);
-		userMateus = new User(02, "Mateus", "BA", categoryListCream);
 		userMateus.addEvaluationGroup(groupB);
-		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
 		userJose.addEvaluationGroup(groupA);
-		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 		userPaulo.addEvaluationGroup(groupA);
 
 		// Definindo novas avalia��es e avalia��es concluidas;
@@ -99,6 +101,11 @@ public class UserTest {
 	@Test
 	public void canEvaluateTestNullProduct() {
 		assertFalse(userJose.canEvaluate(null));
+	}
+	
+	@Test
+	public void canEvaluateTestSameState() {
+		assertFalse(userJose.canEvaluate(shampooProduct));
 	}
 
 	@Test

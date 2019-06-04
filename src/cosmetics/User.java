@@ -10,11 +10,11 @@ public class User {
 	private int id;
 	private String name;
 	private String state;
-	private List<ProductCategory> categories;
+	private List<Category> categories;
 	private Map<EvaluationGroup, List<Evaluation>> evaluations;
 	private List<EvaluationGroup> groups;
 
-	public User(int id, String name, String state, List<ProductCategory> categories) {
+	public User(int id, String name, String state, List<Category> categories) {
 		this.id = id;
 		this.name = name;
 		this.state = state;
@@ -43,14 +43,20 @@ public class User {
 		if (product == null) {
 			return false;
 		}
-		if (product.getProductCategory() == null) {
+		
+		if (product.getCategory() == null) {
 			return false;
 		}
-		if (this.categories.contains(product.getProductCategory())) {
-			return true;
-		} else {
+		
+		if (!this.categories.contains(product.getCategory())) {
 			return false;
 		}
+		
+		if (this.state == product.getRequester().getState()) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	public void addEvaluationGroup(EvaluationGroup group) {
