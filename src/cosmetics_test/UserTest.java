@@ -20,7 +20,7 @@ public class UserTest {
 	List<Category> categoryListEmpty, categoryListCream, categoryListCreamShampoo;
 	Product creamProduct, lotionProduct, shampooProduct;
 	List<Product> productListEmpty, productListShampoo, productListCreamLotion;
-	EvaluationGroup groupA, groupB;
+	Group groupA, groupB;
 	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct, evalJoseShampooProduct;
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
 
@@ -70,14 +70,14 @@ public class UserTest {
 		groupBMembers.add(userMateus);
 
 		// Definindo os grupos de usuarios
-		groupA = new EvaluationGroup("Grupo A", productListShampoo, groupAMembers);
-		groupB = new EvaluationGroup("Grupo B", productListCreamLotion, groupBMembers);
+		groupA = new Group("Grupo A", productListShampoo, groupAMembers);
+		groupB = new Group("Grupo B", productListCreamLotion, groupBMembers);
 		
 		// Adicionando usuários aos grupos
-		userJoao.addEvaluationGroup(groupB);
-		userMateus.addEvaluationGroup(groupB);
-		userJose.addEvaluationGroup(groupA);
-		userPaulo.addEvaluationGroup(groupA);
+		userJoao.addGroup(groupB);
+		userMateus.addGroup(groupB);
+		userJose.addGroup(groupA);
+		userPaulo.addGroup(groupA);
 
 		// Definindo novas avalia��es e avalia��es concluidas;
 		evalJoaoCreamProduct = new Evaluation(groupB, creamProduct, userJoao);
@@ -116,19 +116,19 @@ public class UserTest {
 	// Testando addEvaluationGroup
 	@Test
 	public void addEvaluationGroupTestNormalAddition() {
-		userJoao.addEvaluationGroup(groupA);
+		userJoao.addGroup(groupA);
 		assertTrue(userJoao.getGroups().contains(groupA));
 	}
 
 	@Test
 	public void addEvaluationGroupTestNullAddition() {
-		userJoao.addEvaluationGroup(null);
+		userJoao.addGroup(null);
 		assertFalse(userJoao.getGroups().contains(null));
 	}
 
 	@Test
 	public void addEvaluationGroupTestRepeatAddition() {
-		userJoao.addEvaluationGroup(groupB);
+		userJoao.addGroup(groupB);
 		assertTrue(userJoao.getGroups().contains(groupB));
 	}
 

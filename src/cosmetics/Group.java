@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EvaluationGroup {
+public class Group {
 
 	private String name;
 	private List<Product> products;
 	private List<User> members;
 	private Map<Product, List<Evaluation>> evaluations;
 
-	public EvaluationGroup(String name, List<Product> products, List<User> members) {
+	public Group(String name, List<Product> products, List<User> members) {
 		this.name = name;
 		this.products = products;
 		this.members = members;

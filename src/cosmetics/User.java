@@ -11,8 +11,8 @@ public class User {
 	private String name;
 	private String state;
 	private List<Category> categories;
-	private Map<EvaluationGroup, List<Evaluation>> evaluations;
-	private List<EvaluationGroup> groups;
+	private Map<Group, List<Evaluation>> evaluations;
+	private List<Group> groups;
 
 	public User(int id, String name, String state, List<Category> categories) {
 		this.id = id;
@@ -20,7 +20,7 @@ public class User {
 		this.state = state;
 		this.categories = categories;
 		this.evaluations = new HashMap<>();
-		this.groups = new ArrayList<EvaluationGroup>();
+		this.groups = new ArrayList<Group>();
 	}
 
 	public void addEvaluation(Evaluation evaluation) {
@@ -59,7 +59,7 @@ public class User {
 		return true;
 	}
 
-	public void addEvaluationGroup(EvaluationGroup group) {
+	public void addGroup(Group group) {
 		if (!this.groups.contains(group) && group != null) {
 			int old_size = this.evaluations.size();
 
@@ -86,11 +86,11 @@ public class User {
 		return this.state;
 	}
 
-	public List<Evaluation> getEvaluations(EvaluationGroup group) {
+	public List<Evaluation> getEvaluations(Group group) {
 		return this.evaluations.get(group);
 	}
 
-	public List<EvaluationGroup> getGroups() {
+	public List<Group> getGroups() {
 		return this.groups;
 	}
 

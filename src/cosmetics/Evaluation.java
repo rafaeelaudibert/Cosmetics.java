@@ -5,9 +5,9 @@ public class Evaluation {
 	private Integer score;
 	private User reviewer;
 	private Product product;
-	private EvaluationGroup group;
+	private Group group;
 
-	public Evaluation(EvaluationGroup group, Product product, User reviewer) {
+	public Evaluation(Group group, Product product, User reviewer) {
 		this.group = group;
 		this.product = product;
 		this.reviewer = reviewer;
@@ -26,7 +26,7 @@ public class Evaluation {
 		}
 	}
 
-	public EvaluationGroup getGroup() {
+	public Group getGroup() {
 		return this.group;
 	}
 
