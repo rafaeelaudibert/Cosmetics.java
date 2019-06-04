@@ -65,10 +65,9 @@ public class User {
 
 			this.evaluations.put(group, new ArrayList<>());
 			this.groups.add(group);
-			if (group != null) {
-				group.getMembers().add(this);
-				assert group.getMembers().contains(this);
-			}
+			
+			group.getMembers().add(this);
+			assert (group.getMembers().contains(this));
 
 			assert (this.evaluations.size() > old_size);
 		}
@@ -85,8 +84,8 @@ public class User {
 	public String getState() {
 		return this.state;
 	}
-
-	public List<Evaluation> getEvaluations(Group group) {
+	
+	public List<Evaluation> getEvaluationsFromGroup(Group group) {
 		return this.evaluations.get(group);
 	}
 

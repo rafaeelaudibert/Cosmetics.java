@@ -143,24 +143,24 @@ public class UserTest {
 	@Test
 	public void addEvaluationTestWrongUser() {
 		userJoao.addEvaluation(evalMateusCreamProduct);
-		assertFalse(userJoao.getEvaluations(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
+		assertFalse(userJoao.getEvaluationsFromGroup(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
 	}
 
 	@Test
 	public void addEvaluationTestIncompatibleProduct() {
 		userJoao.addEvaluation(evalJoaoShampooProduct);
-		assertFalse(userJoao.getEvaluations(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
+		assertFalse(userJoao.getEvaluationsFromGroup(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
 	}
 
 	@Test
 	public void addEvaluationTestNotExistingGroup() {
 		userJoao.addEvaluation(evalJoaoCreamProductWrongGroup);
-		assertTrue(userJoao.getEvaluations(evalJoaoCreamProductWrongGroup.getGroup()) == null);
+		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProductWrongGroup.getGroup()) == null);
 	}
 
 	@Test
 	public void addEvaluationTestNormalAddition() {
 		userJoao.addEvaluation(evalJoaoCreamProduct);
-		assertTrue(userJoao.getEvaluations(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
+		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
 	}
 }
