@@ -1,9 +1,9 @@
 package cosmetics;
 
-public class ProductCategory {
+public class Category {
 	private String name;
 
-	public ProductCategory(String name) {
+	public Category(String name) {
 		this.name = name;
 	}
 

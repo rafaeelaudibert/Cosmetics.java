@@ -7,12 +7,14 @@ public class Product {
 
 	private int id;
 	private String name;
-	private ProductCategory category;
+	private Category category;
+	private User requester;
 	private Map<User, Evaluation> evaluations;
 
-	public Product(int id, String name, ProductCategory category) {
+	public Product(int id, String name, User requester, Category category) {
 		this.id = id;
 		this.name = name;
+		this.requester = requester;
 		this.category = category;
 		this.evaluations = new HashMap<>();
 	}
@@ -37,7 +39,15 @@ public class Product {
 		return true;
 	}
 
-	public ProductCategory getProductCategory() {
+	public Category getCategory() {
 		return this.category;
+	}
+	
+	public Integer getId() {
+		return this.id;
+	}
+	
+	public User getRequester() {
+		return this.requester;
 	}
 }
