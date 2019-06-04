@@ -1,5 +1,6 @@
 package cosmetics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,23 +22,45 @@ public class Product {
 	}
 
 	public void addEvaluation(Evaluation evaluation) {
-
+		if (evaluation == null) {
+			throw new NullPointerException(); // Should be changed to a custom exception
+		}
+		
+		if (evaluation.getProduct() != this) {
+			// throw new CustomException(); // Should be changed to a custom exception
+			return;
+		}
+		
+		if (!evaluation.getReviewer().canEvaluate(this)) {
+			// throw new CustomException(); // Should be changed to a custom exception
+			return;
+		}
+		
+		this.evaluations.put(evaluation.getReviewer(), evaluation);
+	}
+	
+	public void addScore(User user, Integer score) throws Exception {
+		if (user == null) {
+			throw new Exception(); // Should be changed to a custom exception
+		}
+		
+		evaluations.get(user).setScore(score);
 	}
 
-	public void addScore(User user, Integer score) {
-
-	}
-
-	public double getAverageScore() {
-		return 0;
+	public Double getAverageScore() {
+		return evaluations.values().stream().mapToDouble(Evaluation::getScore).average().orElse(Double.NaN);
 	}
 
 	public boolean isAcceptable() {
-		return getAverageScore() > ACCEPTABLE_GRADE;
+		return getAverageScore() >= ACCEPTABLE_GRADE;
 	}
-
-	public boolean evaluationDone() {
-		return true;
+	
+	public ArrayList<Evaluation> getEvaluations() {
+		return new ArrayList<Evaluation>(evaluations.values());
+	}
+	
+	public Evaluation getEvaluationFromUser(User user) {
+		return evaluations.get(user);
 	}
 
 	public Category getCategory() {

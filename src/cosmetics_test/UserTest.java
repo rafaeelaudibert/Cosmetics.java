@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import cosmetics.*;
 
@@ -23,9 +21,6 @@ public class UserTest {
 	Group groupA, groupB;
 	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct, evalJoseShampooProduct;
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
-
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() {
@@ -115,28 +110,26 @@ public class UserTest {
 
 	// Testando addEvaluationGroup
 	@Test
-	public void addEvaluationGroupTestNormalAddition() {
+	public void addGroupTestNormalAddition() {
 		userJoao.addGroup(groupA);
 		assertTrue(userJoao.getGroups().contains(groupA));
 	}
 
 	@Test
-	public void addEvaluationGroupTestNullAddition() {
+	public void addGroupTestNullAddition() {
 		userJoao.addGroup(null);
 		assertFalse(userJoao.getGroups().contains(null));
 	}
 
 	@Test
-	public void addEvaluationGroupTestRepeatAddition() {
+	public void addGroupTestRepeatAddition() {
 		userJoao.addGroup(groupB);
 		assertTrue(userJoao.getGroups().contains(groupB));
 	}
 
 	// Testando addEvaluation
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void addEvaluationTestNull() {
-		thrown.expect(NullPointerException.class);
-		// thrown.expectMessage("expected messages");
 		userJoao.addEvaluation(null);
 	}
 
