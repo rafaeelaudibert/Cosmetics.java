@@ -33,7 +33,7 @@ public class UserTest {
 		cream = new ProductCategory("creme");
 		lotion = new ProductCategory("locao");
 		shampoo = new ProductCategory("shampoo");
-		
+
 		// Definindo listas de categorias para teste
 		categoryListEmpty = new ArrayList<ProductCategory>();
 		categoryListCream = new ArrayList<ProductCategory>(); // Cria outra lista de categorias
@@ -41,12 +41,12 @@ public class UserTest {
 		categoryListCreamShampoo = new ArrayList<ProductCategory>();
 		categoryListCreamShampoo.add(cream);
 		categoryListCreamShampoo.add(shampoo);
-		
+
 		// Definindo produtos para teste
 		creamProduct = new Product(01, "Creme X", cream);
 		lotionProduct = new Product(02, "Locao Y", lotion);
 		shampooProduct = new Product(03, "Shampoo Z", shampoo);
-		
+
 		// Definindo listas de produtos para teste;
 		productListEmpty = new ArrayList<Product>();
 		productListShampoo = new ArrayList<Product>();
@@ -54,7 +54,7 @@ public class UserTest {
 		productListCreamLotion = new ArrayList<Product>();
 		productListCreamLotion.add(creamProduct);
 		productListCreamLotion.add(lotionProduct);
-		
+
 		// Definindo listas de usu�rios para teste
 		groupAMembers = new ArrayList<User>();
 		groupAMembers.add(userJose);
@@ -62,11 +62,11 @@ public class UserTest {
 		groupBMembers = new ArrayList<User>();
 		groupBMembers.add(userJoao);
 		groupBMembers.add(userMateus);
-		
+
 		// Definindo os grupos de usuarios
 		groupA = new EvaluationGroup("Grupo A", productListShampoo, groupAMembers);
 		groupB = new EvaluationGroup("Grupo B", productListCreamLotion, groupBMembers);
-		
+
 		// Definindo usu�rios para teste
 		userJoao = new User(01, "Joao", "RS", categoryListCream);
 		userJoao.addEvaluationGroup(groupB);
@@ -76,7 +76,7 @@ public class UserTest {
 		userJose.addEvaluationGroup(groupA);
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 		userPaulo.addEvaluationGroup(groupA);
-		
+
 		// Definindo novas avalia��es e avalia��es concluidas;
 		evalJoaoCreamProduct = new Evaluation(groupB, creamProduct, userJoao);
 		evalMateusCreamProduct = new Evaluation(groupB, creamProduct, userMateus);

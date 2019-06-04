@@ -6,35 +6,34 @@ public class Evaluation {
 	private User reviewer;
 	private Product product;
 	private EvaluationGroup group;
-	
-	public Evaluation(EvaluationGroup group,Product product,User reviewer) {
+
+	public Evaluation(EvaluationGroup group, Product product, User reviewer) {
 		this.group = group;
 		this.product = product;
 		this.reviewer = reviewer;
 		this.score = null;
 	}
-	
+
 	public boolean isDone() {
 		return true;
 	}
-	
-	public void setScore(Integer score) throws Exception{
-		if (this.score == null){
+
+	public void setScore(Integer score) throws Exception {
+		if (this.score == null) {
 			this.score = score;
-		}
-		else {
-			throw new Exception();	//Trocar por uma excess�o espec�fica depois
+		} else {
+			throw new Exception(); // Trocar por uma excess�o espec�fica depois
 		}
 	}
-	
+
 	public EvaluationGroup getGroup() {
 		return this.group;
 	}
-	
+
 	public Product getProduct() {
 		return this.product;
 	}
-	
+
 	public User getReviewer() {
 		return this.reviewer;
 	}
