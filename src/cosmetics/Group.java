@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.*;
 
 public class Group {
 
@@ -11,16 +13,18 @@ public class Group {
 	private List<Product> products;
 	private List<User> members;
 	private Map<Product, List<Evaluation>> evaluations;
+	private boolean allocated;
 	
 	public Group(String name) {
-		new Group(name, new ArrayList<Product>(), new ArrayList<User>());
+		new Group(name, new ArrayList<Product>(), new ArrayList<User>(), allocated);
 	}
 	
-	public Group(String name, List<Product> products, List<User> members) {
+	public Group(String name, List<Product> products, List<User> members, boolean allocated) {
 		this.name = name;
 		this.products = products;
 		this.members = members;
 		this.evaluations = new HashMap<>();
+		this.allocated = allocated;
 	}
 	
 	public void addMember(User user) {
@@ -28,10 +32,18 @@ public class Group {
 	}
 
 	public void addEvaluation(Product product, User reviewer) {
-
+		
 	}
 
 	public void allocate(int NumMembers) {
+		int i = 1;
+		List <Product> orderedproducts = getOrderedProducts();
+			while (i < NumMembers) {
+				while (orderedproducts.isEmpty()) {
+					
+				}
+			}
+		
 
 	}
 
@@ -52,11 +64,11 @@ public class Group {
 	}
 
 	private List<Product> getOrderedProducts() {
-		return null;
+		return products.stream().sorted(Comparator.comparing(Product::getId)).collect(Collectors.toList());
 	}
 
 	public boolean isAllocated() {
-		return true;
+		return this.allocated;
 	}
 
 	public List<User> getMembers() {
