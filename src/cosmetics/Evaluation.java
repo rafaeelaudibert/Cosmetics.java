@@ -18,20 +18,24 @@ public class Evaluation {
 	}
 
 	public boolean isDone() {
+		if (this.getScore() == null) {
+			return false;
+		}
+
 		return true;
 	}
 
 	public void setScore(Integer score) throws Exception {
 		if (this.score != null) {
-			throw new Exception(); // Trocar por uma excess�o espec�fica depois
+			throw new Exception(); 
 		}
 		
 		if (score == null) {
-			throw new Exception(); // Should be changed for a CustomException later
+			throw new Exception(); 
 		}
 				
 		if (score < MINIMUM_SCORE || score > MAXIMUM_SCORE) {
-			throw new Exception(); // Should be changed for a CustomException later
+			throw new Exception(); 
 		}
 		
 		this.score = score;
