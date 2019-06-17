@@ -62,13 +62,9 @@ public class User {
 	public void addGroup(Group group) {
 		if (!this.groups.contains(group) && group != null) {
 			int old_size = this.evaluations.size();
-
-			this.evaluations.put(group, new ArrayList<>());
-			this.groups.add(group);
-			
-			group.getMembers().add(this);
 			assert (group.getMembers().contains(this));
-
+			this.evaluations.put(group, new ArrayList<>());
+			this.groups.add(group);			
 			assert (this.evaluations.size() > old_size);
 		}
 	}
