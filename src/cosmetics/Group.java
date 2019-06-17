@@ -57,7 +57,7 @@ public class Group {
 	public boolean EvaluationDone() {
 		for(Product product : evaluations.keySet()) { 
 			for(Evaluation eval : evaluations.get(product)) {
-				if (eval.getScore() == null) {
+				if (eval.isDone() == false) {
 					return false;
 				}
 		    } 
@@ -65,23 +65,21 @@ public class Group {
 		return true;
 	}
 
-	public List<Product> getAcceptableProducts() {
-		return null;
+	public List<Product> getAcceptableProducts() {		
+		return products.stream().filter(product -> product.isAcceptable() == true).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public List<Product> getNotAcceptableProducts() {
-		return null;
+		return products.stream().filter(product -> product.isAcceptable() == false).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<User> getOrderedCandidateReviewers(Product product) {
-		List<User> u = members.stream().filter(user -> user.canEvaluate(product) == true).distinct()
-				.collect(Collectors.toCollection(ArrayList::new));
+		List<User> u = members.stream().filter(user -> user.canEvaluate(product) == true).distinct().collect(Collectors.toCollection(ArrayList::new));
 		return u.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
-		return products.stream().sorted(Comparator.comparing(Product::getId))
-				.collect(Collectors.toCollection(ArrayList::new));
+		return products.stream().sorted(Comparator.comparing(Product::getId)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public boolean isAllocated() {
@@ -99,14 +97,24 @@ public class Group {
 	public boolean testAllocate() {
 		List<Product> products = getOrderedProducts();
 		products.forEach(p -> System.out.println(p.getName()));
-		List<User> user = getOrderedCandidateReviewers(products.get(0));
-		user.forEach(u -> System.out.println(u.getName()));
+		
 		System.out.println("\n");
 		for (Product p : evaluations.keySet()) {
 			System.out.println("Produto: " + p.getName());
 			for (Evaluation e : evaluations.get(p)) {
 				System.out.println(e.getReviewer().getName());
 			}
+		}
+		if (this.EvaluationDone() == true) {
+			List<Product> acceptable = getAcceptableProducts();
+			List<Product> notacceptable = getNotAcceptableProducts();
+			System.out.println("Produtos aceitos: \n");
+			acceptable.forEach(acc-> System.out.println(acc.getName()));
+			System.out.println("Produtos não aceitos: \n");
+			notacceptable.forEach(na-> System.out.println(na.getName()));
+		}
+		else {
+			System.out.println("\nNotas Faltando");
 		}
 		return true;
 	}

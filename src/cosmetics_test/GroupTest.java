@@ -167,6 +167,17 @@ public class GroupTest {
 		userPedro.addGroup(spfC);
 		userCarla.addGroup(spfC);
 			
+		spfB.allocate(2);
+		avonCCCream.addScore(userSuzana, 2);
+		avonCCCream.addScore(userAna, 2);
+		revolutionPowderSunscreen.addScore(userJoana, -1);
+		revolutionPowderSunscreen.addScore(userBeatriz, 1);
+		maybellineBBCream.addScore(userJoao, 1);
+		maybellineBBCream.addScore(userManoela, 0);
+		revlonFoundationSPF20.addScore(userJoana, -3);
+		revlonFoundationSPF20.addScore(userMiguel, -3);
+		niveaMatteFaceSPF.addScore(userManoela, -1);
+		niveaMatteFaceSPF.addScore(userMiguel, 0);
 		
 
 	}
@@ -175,9 +186,12 @@ public class GroupTest {
 	
 	@Test	
 	public void allocateTest() {
-		Group group = spfC;
-		int numMembers = 5;
-		group.allocate(numMembers);
+		Group group = spfB;
+		int numMembers = 2;
+		group.allocate(numMembers);		
+		
+		
+		
 		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
 		assertTrue(group.testAllocate());
 	}
