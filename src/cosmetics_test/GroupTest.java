@@ -166,7 +166,7 @@ public class GroupTest {
 		userNatasha.addGroup(spfC);		
 		userPedro.addGroup(spfC);
 		userCarla.addGroup(spfC);
-			
+	/*		
 		spfB.allocate(2);
 		avonCCCream.addScore(userSuzana, 2);
 		avonCCCream.addScore(userAna, 2);
@@ -178,7 +178,7 @@ public class GroupTest {
 		revlonFoundationSPF20.addScore(userMiguel, -3);
 		niveaMatteFaceSPF.addScore(userManoela, -1);
 		niveaMatteFaceSPF.addScore(userMiguel, 0);
-		
+	*/	
 
 	}
 	
