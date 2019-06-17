@@ -13,41 +13,60 @@ public class Group {
 	private List<Product> products;
 	private List<User> members;
 	private Map<Product, List<Evaluation>> evaluations;
-	private boolean allocated;
+	private List<Evaluation> evaluation;
+	private boolean allocated = false;
 	
 	public Group(String name) {
-		new Group(name, new ArrayList<Product>(), new ArrayList<User>(), allocated);
+		new Group(name, new ArrayList<Product>(), new ArrayList<User>());
 	}
 	
-	public Group(String name, List<Product> products, List<User> members, boolean allocated) {
+	public Group(String name, List<Product> products, List<User> members) {
 		this.name = name;
 		this.products = products;
 		this.members = members;
-		this.evaluations = new HashMap<>();
-		this.allocated = allocated;
+		this.evaluations = new HashMap<>();		
 	}
 	
 	public void addMember(User user) {
 		this.members.add(user);
+		user.addGroup(this);
 	}
 
 	public void addEvaluation(Product product, User reviewer) {
+		Evaluation eval = new Evaluation(reviewer, product, this);
+		reviewer.addEvaluation(eval);
+		product.addEvaluation(eval);
+		evaluation.add(eval);
 		
 	}
-
-	public void allocate(int NumMembers) {
-		int i = 1;
-		List <Product> orderedproducts = getOrderedProducts();
-			while (i < NumMembers) {
-				while (orderedproducts.isEmpty()) {
-					
-				}
-			}
+	
+	
+	public void allocate(int numMembers) {
+		List<Product> products = getOrderedProducts();
+		for(Product product : products) {
+			evaluation = new ArrayList<Evaluation>();
+		    List<User> reviewers = getOrderedCandidateReviewers(product);
+		    int n = Math.min(reviewers.size(), numMembers);		    
+		    for(int i=0; i < n; i++) {
+		    	this.addEvaluation(product, reviewers.get(i));
+		    }
+		    evaluations.put(product, evaluation);
+		}
 		
-
 	}
 
 	public boolean EvaluationDone() {
+		List<Product> products = getOrderedProducts();
+		products.forEach(p->System.out.println(p.getName()));
+		List<User> user = getOrderedCandidateReviewers(products.get(0));
+		user.forEach(u->System.out.println(u.getName()));
+		System.out.println("\n");
+		for (Product p : evaluations.keySet()) {
+			System.out.println("Produto: " + p.getName());
+			for(Evaluation e : evaluations.get(p)){
+				System.out.println(e.getReviewer().getName());
+			}
+		}
 		return true;
 	}
 
@@ -60,11 +79,12 @@ public class Group {
 	}
 
 	private List<User> getOrderedCandidateReviewers(Product product) {
-		return null;
+		List<User> u = members.stream().filter(user -> user.canEvaluate(product) == true).distinct().collect(Collectors.toCollection(ArrayList::new));
+		return u.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
-		return products.stream().sorted(Comparator.comparing(Product::getId)).collect(Collectors.toList());
+		return products.stream().sorted(Comparator.comparing(Product::getId)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public boolean isAllocated() {
