@@ -3,12 +3,7 @@ package cosmetics_test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -184,7 +179,7 @@ public class GroupTest {
 		int numMembers = 5;
 		group.allocate(numMembers);
 		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
-		assertTrue(group.EvaluationDone());
+		assertTrue(group.testAllocate());
 	}
 	
 }

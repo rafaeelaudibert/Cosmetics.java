@@ -10,15 +10,17 @@ public class Product {
 	private String name;
 	private Category category;
 	private User requester;
+	private Group group;
 	private Map<User, Evaluation> evaluations;
 	private static int ACCEPTABLE_GRADE = 0;
 
-	public Product(int id, String name, User requester, Category category) {
+	public Product(int id, String name, User requester, Category category, Group group) {
 		this.id = id;
 		this.name = name;
 		this.requester = requester;
 		this.category = category;
 		this.evaluations = new HashMap<>();
+		this.group = group;
 	}
 
 	public void addEvaluation(Evaluation evaluation) {
@@ -69,6 +71,10 @@ public class Product {
 
 	public Integer getId() {
 		return this.id;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public User getRequester() {
