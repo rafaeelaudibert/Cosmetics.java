@@ -13,7 +13,6 @@ public class Group {
 	private List<Product> products;
 	private List<User> members;
 	private Map<Product, List<Evaluation>> evaluations;
-	private List<Evaluation> evaluation;
 	private boolean allocated = false;
 
 	public Group(String name) {
@@ -25,61 +24,79 @@ public class Group {
 		this.products = products;
 		this.members = members;
 		this.evaluations = new HashMap<>();
-	}
-
-	public void addMember(User user) {
-		this.members.add(user);
-		user.addGroup(this);
-	}
-
-	public void addEvaluation(Product product, User reviewer) {
-		Evaluation eval = new Evaluation(reviewer, product, this);
-		reviewer.addEvaluation(eval);
-		product.addEvaluation(eval);
-		evaluation.add(eval);
-
-	}
-
-	public void allocate(int numMembers) {
-		List<Product> products = getOrderedProducts();
-		for (Product product : products) {
-			evaluation = new ArrayList<Evaluation>();
-			List<User> reviewers = getOrderedCandidateReviewers(product);
-			int n = Math.min(reviewers.size(), numMembers);
-			for (int i = 0; i < n; i++) {
-				this.addEvaluation(product, reviewers.get(i));
+		
+		for(User member : members) {
+			try {
+				member.addGroup(this);
+			} catch(Exception e) {
+				// Pass, because the error is only raised if the members are
+				// not on this group. But we set it in the lines above, so this
+				// exception never occurs
 			}
-			evaluations.put(product, evaluation);
 		}
+	}
+
+	public Evaluation addEvaluation(Product product, User reviewer) {
+		Evaluation evaluation = new Evaluation(reviewer, product, this);
+		reviewer.addEvaluation(evaluation);
+		product.addEvaluation(evaluation);
+		
+		return evaluation;
+	}
+
+	public void allocate(int numMembers) throws Exception {
+		
+		// If the group is already allocated, throw an exception
+		if (this.isAllocated())
+			throw new Exception();
+		
+		// Para cada produto, realiza a alocação
+		for (Product product : getOrderedProducts()) {
+			List<Evaluation> product_evaluations = new ArrayList<Evaluation>();
+			List<User> reviewers = getOrderedCandidateReviewers(product);
+			
+			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
+				Evaluation evaluation = this.addEvaluation(product, reviewers.get(i));
+				product_evaluations.add(evaluation);
+			}
+			evaluations.put(product, product_evaluations);
+		}
+		
+		// Mark the group as allocated
 		this.allocated = true;
 	}
 
-	public boolean EvaluationDone() {
-		for(Product product : evaluations.keySet()) { 
-			for(Evaluation eval : evaluations.get(product)) {
-				if (eval.isDone() == false) {
-					return false;
-				}
-		    } 
-		}
-		return true;
+	public boolean EvaluationDone() {		
+		return evaluations.values()
+				.parallelStream()
+				.map(evaluationList -> evaluationList.stream().allMatch(Evaluation::isDone))
+				.allMatch(Boolean::valueOf);
 	}
 
-	public List<Product> getAcceptableProducts() {		
-		return products.stream().filter(product -> product.isAcceptable() == true).collect(Collectors.toCollection(ArrayList::new));
+	public List<Product> getAcceptableProducts() {
+		return products.parallelStream()
+				.filter(product -> product.isAcceptable())
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public List<Product> getNotAcceptableProducts() {
-		return products.stream().filter(product -> product.isAcceptable() == false).collect(Collectors.toCollection(ArrayList::new));
+		return products.parallelStream()
+				.filter(product -> !product.isAcceptable())
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<User> getOrderedCandidateReviewers(Product product) {
-		List<User> u = members.stream().filter(user -> user.canEvaluate(product) == true).distinct().collect(Collectors.toCollection(ArrayList::new));
-		return u.stream().sorted(Comparator.comparing(User::getId)).collect(Collectors.toCollection(ArrayList::new));
+		return members.parallelStream()
+				.filter(user -> user.canEvaluate(product))
+				.distinct()
+				.sorted(Comparator.comparing(User::getId))
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
-		return products.stream().sorted(Comparator.comparing(Product::getId)).collect(Collectors.toCollection(ArrayList::new));
+		return products.parallelStream()
+				.sorted(Comparator.comparing(Product::getId))
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public boolean isAllocated() {

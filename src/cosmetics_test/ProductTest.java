@@ -58,11 +58,7 @@ public class ProductTest {
 		groupMembers.add(userMateus);
 
 		// Definindo os grupos de usuarios
-		group = new Group("Grupo", productsList, groupMembers);
-		
-		// Adicionando usuários aos grupos
-		userJoao.addGroup(group);
-		userMateus.addGroup(group);		
+		group = new Group("Grupo", productsList, groupMembers);	
 	}
 	
 	// Testando addEvaluation

@@ -2,14 +2,25 @@ package cosmetics_test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
+
+import cosmetics.Category;
+import cosmetics.Evaluation;
+import cosmetics.Group;
+import cosmetics.Product;
+import cosmetics.User;
 
 public class EvaluationTest {
 
 	User userJoao;
 	Category cream;
-	ArrayList categoryListCream;
+	List<Category> categoryListCream;
 	Product creamProduct;
+	List<User> groupAMembers;
 	Group groupA;
 	List<Product> ListProductEmpty, ListProductCream;
 	
@@ -24,60 +35,66 @@ public class EvaluationTest {
 		userJoao = new User(01, "Joao", "RS", categoryListCream);
 		
 		creamProduct = new Product(01, "Creme X", userJoao, cream);
-	
-		groupA = new Group("Grupo A", productListCream, groupAMembers);
 		
-		evaluation1 = new Evaluation(userJoao, creamProduct, GroupA);			
+		groupAMembers = new ArrayList<User>();
+		groupAMembers.add(userJoao);
+	
+		groupA = new Group("Grupo A", ListProductCream, groupAMembers);		
 	}
 	
 
 	
 	@Test
-	public void isDoneTest() {
-		Evaluation evaluation1;
-		evaluation1 = new Evaluation(userJoao, creamProduct, GroupA);
-		evaluation1.setScore(1);
-		AssertTrue(evaluation1.isDone());
-	}
-	
-	@Test
-	public void isDoneTest() {
-		Evaluation evaluation2;
-		evaluation2 = new Evaluation(userJoao, creamProduct, GroupA);
-		AssertFalse(evaluation2.isDone());
-	}
-
-	@Test
-	 public void setScoreTest() {
+	public void isDoneTrueTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, GroupA);
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation.setScore(1);
+		assertTrue(evaluation.isDone());
+	}
+	
+	@Test
+	public void isDoneFalseTest() {
+		Evaluation evaluation;
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		assertFalse(evaluation.isDone());
+	}
+	
+	@Test(expected=Exception.class)
+	 public void setScoreSmallerValueTest() throws Exception {
+		Evaluation evaluation;
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
 		evaluation.setScore(-5);
-		AssertTrue(evaluation.getScore() == null); 
 	}
 	
 	@Test
-	 public void setScoreTest() {
+	 public void setScoreLowLimitTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, GroupA);
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
 		evaluation.setScore(-3);
-		AssertTrue(evaluation.getScore() == -3);
+		assertTrue(evaluation.getScore() == -3);
 	}
 	
 	@Test
-	 public void setScoreTest() {
+	 public void setScoreHighLimitTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, GroupA);
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
 		evaluation.setScore(3);
-		AssertTrue(evaluation.getScore() == 3);
+		assertTrue(evaluation.getScore() == 3);
 	}
 	
-	@Test
-	 public void setScoreTest() {
+	@Test(expected=Exception.class)
+	 public void setScoreAfterSetTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, GroupA);
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
 		evaluation.setScore(0);
 		evaluation.setScore(-5);
-		AssertTrue(evaluation.getScore() == 0);  
+	}
+	
+	@Test(expected=Exception.class)
+	 public void setScoreNullTest() throws Exception {
+		Evaluation evaluation;
+		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation.setScore(null);
 	}
 	
 }

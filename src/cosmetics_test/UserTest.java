@@ -67,12 +67,6 @@ public class UserTest {
 		// Definindo os grupos de usuarios
 		groupA = new Group("Grupo A", productListShampoo, groupAMembers);
 		groupB = new Group("Grupo B", productListCreamLotion, groupBMembers);
-		
-		// Adicionando usuários aos grupos
-		userJoao.addGroup(groupB);
-		userMateus.addGroup(groupB);
-		userJose.addGroup(groupA);
-		userPaulo.addGroup(groupA);
 
 		// Definindo novas avalia��es e avalia��es concluidas;
 		evalJoaoCreamProduct = new Evaluation(userJoao, creamProduct, groupB);
@@ -109,20 +103,19 @@ public class UserTest {
 	}
 
 	// Testando addEvaluationGroup
-	@Test
-	public void addGroupTestNormalAddition() {
+	@Test(expected=Exception.class)
+	public void addGroupNotInGroupTest() throws Exception {
+		// UserJoao já deve estar no grupo A
 		userJoao.addGroup(groupA);
-		assertTrue(userJoao.getGroups().contains(groupA));
 	}
 
-	@Test
-	public void addGroupTestNullAddition() {
+	@Test(expected=Exception.class)
+	public void addGroupTestNullAddition() throws Exception {
 		userJoao.addGroup(null);
-		assertFalse(userJoao.getGroups().contains(null));
 	}
 
 	@Test
-	public void addGroupTestRepeatAddition() {
+	public void addGroupTestRepeatAddition() throws Exception {
 		userJoao.addGroup(groupB);
 		assertTrue(userJoao.getGroups().contains(groupB));
 	}

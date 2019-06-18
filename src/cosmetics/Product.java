@@ -10,17 +10,15 @@ public class Product {
 	private String name;
 	private Category category;
 	private User requester;
-	private Group group;
 	private Map<User, Evaluation> evaluations;
 	private static int ACCEPTABLE_GRADE = 0;
 
-	public Product(int id, String name, User requester, Category category, Group group) {
+	public Product(int id, String name, User requester, Category category) {
 		this.id = id;
 		this.name = name;
 		this.requester = requester;
 		this.category = category;
 		this.evaluations = new HashMap<>();
-		this.group = group;
 	}
 
 	public void addEvaluation(Evaluation evaluation) {
@@ -50,7 +48,11 @@ public class Product {
 	}
 
 	public Double getAverageScore() {
-		return evaluations.values().stream().mapToDouble(Evaluation::getScore).average().orElse(Double.NaN);
+		return evaluations.values()
+				.parallelStream()
+				.mapToDouble(Evaluation::getScore)
+				.average()
+				.orElse(Double.NaN);
 	}
 
 	public boolean isAcceptable() {

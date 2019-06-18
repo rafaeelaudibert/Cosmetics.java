@@ -59,12 +59,20 @@ public class User {
 		return true;
 	}
 
-	public void addGroup(Group group) {
-		if (!this.groups.contains(group) && group != null) {
+	public void addGroup(Group group) throws Exception {
+		
+		if (group == null)
+			throw new NullPointerException();
+		
+		if (!group.getMembers().contains(this))
+			throw new Exception();
+		
+		if (!this.groups.contains(group)) {
 			int old_size = this.evaluations.size();
-			assert (group.getMembers().contains(this));
+						
 			this.evaluations.put(group, new ArrayList<>());
-			this.groups.add(group);			
+			this.groups.add(group);		
+			
 			assert (this.evaluations.size() > old_size);
 		}
 	}

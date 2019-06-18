@@ -25,7 +25,7 @@ public class GroupTest {
 	List<Evaluation> evaluation;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception{
 		// Definindo categorias para teste
 		ddCream 		= new Category("DD Cream");
 		ccCream 		= new Category("CC Cream");
@@ -114,17 +114,17 @@ public class GroupTest {
 		
 	
 		// Definindo os grupos de usuarios
-		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream, spfC);
-		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream, spfB);
-		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen, spfB);
-		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream, spfB);
-		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF, spfB);
-		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF, spfB);
-		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream, spfA);
-		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen, spfA);
-		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream, spfA);
-		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF, spfA);
-		naturaSPF20RostoMatte 		= new Product(11, "Natura SPF20 Rosto Matte", userCarla, oilFreeMatteSPF, spfA);
+		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream);
+		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream);
+		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen);
+		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream);
+		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF);
+		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF);
+		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream);
+		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen);
+		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream);
+		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF);
+		naturaSPF20RostoMatte 		= new Product(11, "Natura SPF20 Rosto Matte", userCarla, oilFreeMatteSPF);
 		productListSPFA 			= new ArrayList<Product>();
 		productListSPFB				= new ArrayList<Product>();
 		productListSPFC				= new ArrayList<Product>();
@@ -144,7 +144,7 @@ public class GroupTest {
 		spfB = new Group("SPF B", productListSPFB, spfBMembers);
 		spfC = new Group("SPF C", productListSPFC, spfCMembers);
 		
-		// Adicionando usuários aos grupos
+		// Adicionando usuários aos grupos (não precisamos pegar a exceção pois é garantido disso funcionar)
 		userJoao.addGroup(spfA);
 		userJoao.addGroup(spfB);
 		userAna.addGroup(spfA);
@@ -185,12 +185,10 @@ public class GroupTest {
 	
 	
 	@Test	
-	public void allocateTest() {
+	public void allocateTest() throws Exception {
 		Group group = spfB;
-		int numMembers = 2;
-		group.allocate(numMembers);		
-		
-		
+		int numMembers = 1;
+		group.allocate(numMembers);				
 		
 		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
 		assertTrue(group.testAllocate());
