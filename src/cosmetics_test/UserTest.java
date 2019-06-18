@@ -19,7 +19,7 @@ public class UserTest {
 	Product creamProduct, lotionProduct, shampooProduct;
 	List<Product> productListEmpty, productListShampoo, productListCreamLotion;
 	Group groupA, groupB;
-	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct, evalJoseShampooProduct;
+	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct;
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
 
 	@Before
@@ -44,9 +44,9 @@ public class UserTest {
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
 		// Definindo produtos para teste
-		creamProduct = new Product(01, "Creme X", userPaulo, cream);
-		lotionProduct = new Product(02, "Locao Y", userJose, lotion);
-		shampooProduct = new Product(03, "Shampoo Z", userJoao, shampoo);
+		creamProduct = new Product(01, "Creme X", userPaulo, cream, groupB);
+		lotionProduct = new Product(02, "Locao Y", userJose, lotion, null);
+		shampooProduct = new Product(03, "Shampoo Z", userJoao, shampoo, groupB);
 
 		// Definindo listas de produtos para teste;
 		productListEmpty = new ArrayList<Product>();
@@ -69,11 +69,6 @@ public class UserTest {
 		groupB = new Group("Grupo B", productListCreamLotion, groupBMembers);
 
 		// Definindo novas avalia��es e avalia��es concluidas;
-		evalJoaoCreamProduct = new Evaluation(userJoao, creamProduct, groupB);
-		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct, groupB);
-		evalJoseShampooProduct = new Evaluation(userJose, shampooProduct, groupA);
-		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct, groupA);
-		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct, groupB);
 	}
 
 	// Testando canEvaluate
@@ -128,24 +123,28 @@ public class UserTest {
 
 	@Test
 	public void addEvaluationTestWrongUser() {
+		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct, groupB);
 		userJoao.addEvaluation(evalMateusCreamProduct);
 		assertFalse(userJoao.getEvaluationsFromGroup(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
 	}
 
 	@Test
 	public void addEvaluationTestIncompatibleProduct() {
+		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct, groupB);
 		userJoao.addEvaluation(evalJoaoShampooProduct);
 		assertFalse(userJoao.getEvaluationsFromGroup(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
 	}
 
 	@Test
 	public void addEvaluationTestNotExistingGroup() {
+		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct, groupA);
 		userJoao.addEvaluation(evalJoaoCreamProductWrongGroup);
 		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProductWrongGroup.getGroup()) == null);
 	}
 
 	@Test
 	public void addEvaluationTestNormalAddition() {
+		evalJoaoCreamProduct = new Evaluation(userJoao, creamProduct, groupB);
 		userJoao.addEvaluation(evalJoaoCreamProduct);
 		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
 	}

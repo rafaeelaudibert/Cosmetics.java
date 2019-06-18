@@ -23,9 +23,10 @@ public class GroupTest {
 	List<Product> productListEmpty, productListSPFA, productListSPFB, productListSPFC;
 	Group spfA, spfB, spfC;
 	List<Evaluation> evaluation;
+	Evaluation evaluation1;
 	
 	@Before
-	public void setUp() throws Exception{
+	public void setUp() throws Exception {
 		// Definindo categorias para teste
 		ddCream 		= new Category("DD Cream");
 		ccCream 		= new Category("CC Cream");
@@ -112,10 +113,11 @@ public class GroupTest {
 		spfCMembers.add(userPedro);
 		spfCMembers.add(userCarla);
 		
-	
+		
 		// Definindo os grupos de usuarios
 		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream);
 		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream);
+		avonCCCream.setGroup(spfB);
 		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen);
 		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream);
 		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF);
@@ -166,33 +168,63 @@ public class GroupTest {
 		userNatasha.addGroup(spfC);		
 		userPedro.addGroup(spfC);
 		userCarla.addGroup(spfC);
-	/*		
-		spfB.allocate(2);
-		avonCCCream.addScore(userSuzana, 2);
-		avonCCCream.addScore(userAna, 2);
-		revolutionPowderSunscreen.addScore(userJoana, -1);
-		revolutionPowderSunscreen.addScore(userBeatriz, 1);
-		maybellineBBCream.addScore(userJoao, 1);
-		maybellineBBCream.addScore(userManoela, 0);
-		revlonFoundationSPF20.addScore(userJoana, -3);
-		revlonFoundationSPF20.addScore(userMiguel, -3);
-		niveaMatteFaceSPF.addScore(userManoela, -1);
-		niveaMatteFaceSPF.addScore(userMiguel, 0);
-	*/	
+		
+		//Definindo evaluations
+		//evaluation1 = new Evaluation();
+			
+//		spfB.allocate(2);
+//		avonCCCream.addScore(userJoao, 2);
+//		avonCCCream.addScore(userAna, 2);
+//		revolutionPowderSunscreen.addScore(userJoana, -1);
+//		revolutionPowderSunscreen.addScore(userBeatriz, 1);
+//		maybellineBBCream.addScore(userJoao, 1);
+//		maybellineBBCream.addScore(userManoela, 0);
+//		revlonFoundationSPF20.addScore(userJoana, -3);
+//		revlonFoundationSPF20.addScore(userMiguel, -3);
+//		niveaMatteFaceSPF.addScore(userManoela, -1);
+//		niveaMatteFaceSPF.addScore(userMiguel, 0);
+		
 
 	}
-	
-	
-	
+		
 	@Test	
 	public void allocateTest() throws Exception {
-		Group group = spfB;
-		int numMembers = 1;
+		Group group = spfA;
+		int numMembers = 3;
 		group.allocate(numMembers);				
 		
 		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
 		assertTrue(group.testAllocate());
 	}
 	
+	@Test
+	public void getOrderedCandidateReviewersTest() {
+		ArrayList<User> ordered_users = new ArrayList<User>();
+		ordered_users.add(userJoao);
+		ordered_users.add(userAna);
+		ordered_users.add(userSuzana);
+		
+		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Initial ordering
+		
+		Evaluation evaluation = new Evaluation(userJoao, laRocheCCCream, spfB);
+		userJoao.addEvaluation(evaluation);
+		laRocheCCCream.addEvaluation(evaluation);
+		ordered_users.remove(0);
+		ordered_users.add(userJoao);
+		
+		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Joao has a product assigned, so it goes to the end of the list
+		
+		Evaluation evaluation2 = new Evaluation(userSuzana, avonCCCream, spfB);
+		userSuzana.addEvaluation(evaluation2);
+		avonCCCream.addEvaluation(evaluation2);
+		ordered_users.remove(1);
+		
+		System.out.println(ordered_users);
+		System.out.println(spfB.getOrderedCandidateReviewers(avonCCCream));
+		
+		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Suzana has the current product assigned, so it should be not in the list anymore
+		
+	}
+
 }
 

@@ -56,6 +56,10 @@ public class User {
 			return false;
 		}
 		
+		if (this.getEvaluationsFromGroup(product.getGroup()).stream().anyMatch((Evaluation evaluation) -> evaluation.getProduct() == product)) {
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -95,6 +99,11 @@ public class User {
 
 	public List<Group> getGroups() {
 		return this.groups;
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 }

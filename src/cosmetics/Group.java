@@ -36,12 +36,12 @@ public class Group {
 		}
 	}
 
-	public Evaluation addEvaluation(Product product, User reviewer) {
+	private void addEvaluation(Product product, User reviewer) {
 		Evaluation evaluation = new Evaluation(reviewer, product, this);
+		
+		evaluations.get(product).add(evaluation);
 		reviewer.addEvaluation(evaluation);
 		product.addEvaluation(evaluation);
-		
-		return evaluation;
 	}
 
 	public void allocate(int numMembers) throws Exception {
@@ -52,21 +52,19 @@ public class Group {
 		
 		// Para cada produto, realiza a alocação
 		for (Product product : getOrderedProducts()) {
-			List<Evaluation> product_evaluations = new ArrayList<Evaluation>();
 			List<User> reviewers = getOrderedCandidateReviewers(product);
+			evaluations.put(product, new ArrayList<Evaluation>());
 			
 			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
-				Evaluation evaluation = this.addEvaluation(product, reviewers.get(i));
-				product_evaluations.add(evaluation);
+				this.addEvaluation(product, reviewers.get(i));
 			}
-			evaluations.put(product, product_evaluations);
 		}
 		
 		// Mark the group as allocated
 		this.allocated = true;
 	}
 
-	public boolean EvaluationDone() {		
+	public boolean evaluationDone() {		
 		return evaluations.values()
 				.parallelStream()
 				.map(evaluationList -> evaluationList.stream().allMatch(Evaluation::isDone))
@@ -85,12 +83,18 @@ public class Group {
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
-	private List<User> getOrderedCandidateReviewers(Product product) {
+	public List<User> getOrderedCandidateReviewers(Product product) {
 		return members.parallelStream()
 				.filter(user -> user.canEvaluate(product))
 				.distinct()
-				.sorted(Comparator.comparing(User::getId))
+				.sorted(Comparator.comparing((User user) -> user.getEvaluationsFromGroup(this).size())
+						.thenComparing(User::getId))
 				.collect(Collectors.toCollection(ArrayList::new));
+//		return members.parallelStream()
+//				.filter(user -> user.canEvaluate(product))
+//				.distinct()
+//				.sorted(Comparator.comparing(User::getId))
+//				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
@@ -122,7 +126,7 @@ public class Group {
 				System.out.println(e.getReviewer().getName());
 			}
 		}
-		if (this.EvaluationDone() == true) {
+		if (this.evaluationDone() == true) {
 			List<Product> acceptable = getAcceptableProducts();
 			List<Product> notacceptable = getNotAcceptableProducts();
 			System.out.println("Produtos aceitos: \n");

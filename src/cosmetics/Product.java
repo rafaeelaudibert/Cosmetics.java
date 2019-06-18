@@ -10,14 +10,16 @@ public class Product {
 	private String name;
 	private Category category;
 	private User requester;
+	private Group group;
 	private Map<User, Evaluation> evaluations;
 	private static int ACCEPTABLE_GRADE = 0;
 
-	public Product(int id, String name, User requester, Category category) {
+	public Product(int id, String name, User requester, Category category, Group group) {
 		this.id = id;
 		this.name = name;
 		this.requester = requester;
 		this.category = category;
+		this.group = group;
 		this.evaluations = new HashMap<>();
 	}
 
@@ -81,5 +83,9 @@ public class Product {
 
 	public User getRequester() {
 		return this.requester;
+	}
+	
+	public Group getGroup() {
+		return this.group;
 	}
 }
