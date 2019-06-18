@@ -56,10 +56,13 @@ public class User {
 			return false;
 		}
 		
-		if (this.getEvaluationsFromGroup(product.getGroup()).stream().anyMatch((Evaluation evaluation) -> evaluation.getProduct() == product)) {
-			return false;
+		if (!(this.evaluations.get(product.getGroup()) == null)) {
+			for (Evaluation evaluation : this.evaluations.get(product.getGroup())) {
+				if (evaluation.getProduct().getId() == product.getId()) {
+					return false;
+				}
+			}
 		}
-		
 		return true;
 	}
 

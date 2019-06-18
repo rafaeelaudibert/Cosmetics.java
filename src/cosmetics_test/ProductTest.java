@@ -42,23 +42,22 @@ public class ProductTest {
 		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
+		// Definindo grupos para teste
+		group = new Group("Grupo");
+		group.addMember(userJoao);
+		group.addMember(userMateus);
+		
+		
 		// Definindo produtos para teste
-		cream = new Product(01, "Creme X", userPaulo, creamCategory);
-		lotion = new Product(02, "Locao Y", userJose, lotionCategory);
-		shampoo = new Product(03, "Shampoo Z", userJoao, shampooCategory);
+		cream = new Product(01, "Creme X", userPaulo, creamCategory,group);
+		lotion = new Product(02, "Locao Y", userJose, lotionCategory,group);
+		shampoo = new Product(03, "Shampoo Z", userJoao, shampooCategory,group);
 
 		// Definindo listas de produtos para teste;
 		List<Product> productsList = new ArrayList<Product>();
 		productsList.add(cream);
 		productsList.add(lotion);
 
-		// Definindo listas de usu�rios para teste
-		List<User> groupMembers = new ArrayList<User>();
-		groupMembers.add(userJoao);
-		groupMembers.add(userMateus);
-
-		// Definindo os grupos de usuarios
-		group = new Group("Grupo", productsList, groupMembers);	
 	}
 	
 	// Testando addEvaluation

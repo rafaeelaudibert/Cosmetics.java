@@ -16,7 +16,7 @@ public class Group {
 	private boolean allocated = false;
 
 	public Group(String name) {
-		new Group(name, new ArrayList<Product>(), new ArrayList<User>());
+		this(name, new ArrayList<Product>(), new ArrayList<User>());
 	}
 
 	public Group(String name, List<Product> products, List<User> members) {
@@ -138,5 +138,13 @@ public class Group {
 			System.out.println("\nNotas Faltando");
 		}
 		return true;
+	}
+
+	public void addMember(User newMember) {
+			this.members.add(newMember);
+	}
+	
+	public void addProduct(Product product) {
+			this.products.add(product);
 	}
 }

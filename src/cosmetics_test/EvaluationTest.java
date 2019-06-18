@@ -32,14 +32,18 @@ public class EvaluationTest {
 		categoryListCream = new ArrayList<Category>();
 		categoryListCream.add(cream);
 		
+		// Definindo Grupo
+		groupA = new Group("Grupo A");
+		
+		// Definindo Usuario
 		userJoao = new User(01, "Joao", "RS", categoryListCream);
 		
-		creamProduct = new Product(01, "Creme X", userJoao, cream);
+		// Definindo Produto
+		creamProduct = new Product(01, "Creme X", userJoao, cream, groupA);
 		
-		groupAMembers = new ArrayList<User>();
-		groupAMembers.add(userJoao);
+		groupA.addProduct(creamProduct);
+		groupA.addMember(userJoao);
 	
-		groupA = new Group("Grupo A", ListProductCream, groupAMembers);		
 	}
 	
 

@@ -85,66 +85,66 @@ public class GroupTest {
 		categoryListUser.add(ccCream);
 		categoryListUser.add(ddCream);
 		categoryListUser.add(oilFreeMatteSPF);
-		userCarla 	= new User(10, "Carla", "Sp", categoryListUser);
+		userCarla 	= new User(10, "Carla", "SP", categoryListUser);
 			
-		// Definindo listas de usu�rios para teste
-		spfAMembers = new ArrayList<User>();
-		spfAMembers.add(userJoao);
-		spfAMembers.add(userAna);
-		spfAMembers.add(userManoela);
-		spfAMembers.add(userJoana);
-		spfAMembers.add(userMiguel);
-		spfAMembers.add(userBeatriz);
-		spfAMembers.add(userSuzana);
-		spfBMembers = new ArrayList<User>();
-		spfBMembers.add(userJoao);
-		spfBMembers.add(userAna);
-		spfBMembers.add(userManoela);
-		spfBMembers.add(userJoana);
-		spfBMembers.add(userMiguel);
-		spfBMembers.add(userBeatriz);
-		spfBMembers.add(userSuzana);		
-		spfCMembers = new ArrayList<User>();
-		spfCMembers.add(userJoana);
-		spfCMembers.add(userMiguel);
-		spfCMembers.add(userBeatriz);
-		spfCMembers.add(userSuzana);
-		spfCMembers.add(userNatasha);
-		spfCMembers.add(userPedro);
-		spfCMembers.add(userCarla);
+		// Definindo grupos para teste
+		spfA = new Group("SPF A");
+		spfB = new Group("SPF B");
+		spfC = new Group("SPF C");
+		
+		// Definindo usuarios dos grupos
+		// Grupo a
+		spfA.addMember(userJoao);
+		spfA.addMember(userAna);
+		spfA.addMember(userManoela);
+		spfA.addMember(userJoana);
+		spfA.addMember(userMiguel);
+		spfA.addMember(userBeatriz);
+		spfA.addMember(userSuzana);
+		// Grupo b
+		spfB.addMember(userJoao);
+		spfB.addMember(userAna);
+		spfB.addMember(userManoela);
+		spfB.addMember(userJoana);
+		spfB.addMember(userMiguel);
+		spfB.addMember(userBeatriz);
+		spfB.addMember(userSuzana);		
+		// Grupo c
+		spfC.addMember(userJoana);
+		spfC.addMember(userMiguel);
+		spfC.addMember(userBeatriz);
+		spfC.addMember(userSuzana);
+		spfC.addMember(userNatasha);
+		spfC.addMember(userPedro);
+		spfC.addMember(userCarla);
 		
 		
 		// Definindo os grupos de usuarios
-		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream);
-		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream);
-		avonCCCream.setGroup(spfB);
-		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen);
-		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream);
-		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF);
-		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF);
-		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream);
-		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen);
-		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream);
-		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF);
-		naturaSPF20RostoMatte 		= new Product(11, "Natura SPF20 Rosto Matte", userCarla, oilFreeMatteSPF);
-		productListSPFA 			= new ArrayList<Product>();
-		productListSPFB				= new ArrayList<Product>();
-		productListSPFC				= new ArrayList<Product>();
-		productListSPFA.add(naturaSPF20RostoMatte);
-		productListSPFA.add(baseOBoticarioSPF20);
-		productListSPFA.add(niveaBBCream);
-		productListSPFA.add(yvesRocherPowderSPF15);
-		productListSPFA.add(laRocheCCCream);
-		productListSPFB.add(niveaMatteFaceSPF);
-		productListSPFB.add(revlonFoundationSPF20);
-		productListSPFB.add(maybellineBBCream);
-		productListSPFB.add(revolutionPowderSunscreen);
-		productListSPFB.add(avonCCCream);
-		productListSPFC.add(lorealDDCream);
+		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream,spfC);
+		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream,spfB);
+		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen,spfB);
+		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream,spfB);
+		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF,spfB);
+		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF,spfB);
+		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream,spfA);
+		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen,spfA);
+		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream,spfA);
+		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF,spfA);
+		naturaSPF20RostoMatte 		= new Product(11, "Natura SPF20 Rosto Matte", userCarla, oilFreeMatteSPF,spfA);
 		
-		spfA = new Group("SPF A", productListSPFA, spfAMembers);
-		spfB = new Group("SPF B", productListSPFB, spfBMembers);
-		spfC = new Group("SPF C", productListSPFC, spfCMembers);
+		spfA.addProduct(naturaSPF20RostoMatte);
+		spfA.addProduct(baseOBoticarioSPF20);
+		spfA.addProduct(niveaBBCream);
+		spfA.addProduct(yvesRocherPowderSPF15);
+		spfA.addProduct(laRocheCCCream);
+		
+		spfB.addProduct(niveaMatteFaceSPF);
+		spfB.addProduct(revlonFoundationSPF20);
+		spfB.addProduct(maybellineBBCream);
+		spfB.addProduct(revolutionPowderSunscreen);
+		spfB.addProduct(avonCCCream);
+		
+		spfC.addProduct(lorealDDCream);
 		
 		// Adicionando usuários aos grupos (não precisamos pegar a exceção pois é garantido disso funcionar)
 		userJoao.addGroup(spfA);

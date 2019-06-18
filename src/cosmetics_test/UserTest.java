@@ -23,7 +23,7 @@ public class UserTest {
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception{
 		// Definindo categorias para teste
 		cream = new Category("creme");
 		lotion = new Category("locao");
@@ -43,32 +43,30 @@ public class UserTest {
 		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
+		//Definindo os grupos e inicializando os usuários contidos no mesmo
+		groupA = new Group("Grupo A");
+		groupB = new Group("Grupo B");
+		
+		groupA.addMember(userJose);
+		groupA.addMember(userPaulo);
+		userJose.addGroup(groupA);
+		userPaulo.addGroup(groupA);
+		
+		groupB.addMember(userJoao);
+		groupB.addMember(userMateus);
+		userJoao.addGroup(groupB);
+		userMateus.addGroup(groupB);
+		
 		// Definindo produtos para teste
-		creamProduct = new Product(01, "Creme X", userPaulo, cream, groupB);
-		lotionProduct = new Product(02, "Locao Y", userJose, lotion, null);
+		creamProduct = new Product(01, "Creme X", userPaulo, cream, groupA);
+		lotionProduct = new Product(02, "Locao Y", userJose, lotion, groupA);
 		shampooProduct = new Product(03, "Shampoo Z", userJoao, shampoo, groupB);
 
-		// Definindo listas de produtos para teste;
-		productListEmpty = new ArrayList<Product>();
-		productListShampoo = new ArrayList<Product>();
-		productListShampoo.add(shampooProduct);
-		productListCreamLotion = new ArrayList<Product>();
-		productListCreamLotion.add(creamProduct);
-		productListCreamLotion.add(lotionProduct);
-
-		// Definindo listas de usuï¿½rios para teste
-		groupAMembers = new ArrayList<User>();
-		groupAMembers.add(userJose);
-		groupAMembers.add(userPaulo);
-		groupBMembers = new ArrayList<User>();
-		groupBMembers.add(userJoao);
-		groupBMembers.add(userMateus);
-
-		// Definindo os grupos de usuarios
-		groupA = new Group("Grupo A", productListShampoo, groupAMembers);
-		groupB = new Group("Grupo B", productListCreamLotion, groupBMembers);
-
-		// Definindo novas avaliaï¿½ï¿½es e avaliaï¿½ï¿½es concluidas;
+		//Definindo os produtos por grupo
+		groupA.addProduct(shampooProduct);
+		groupB.addProduct(lotionProduct);
+		groupB.addProduct(creamProduct);
+		
 	}
 
 	// Testando canEvaluate
