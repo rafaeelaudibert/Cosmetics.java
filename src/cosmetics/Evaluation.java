@@ -10,11 +10,14 @@ public class Evaluation {
 	private static Integer MINIMUM_SCORE = -3;
 	private static Integer MAXIMUM_SCORE = 3;
 
-	public Evaluation(User reviewer, Product product, Group group) {
-		this.group = group;
+	public Evaluation(User reviewer, Product product) {
+		this.group = product.getGroup();
 		this.product = product;
 		this.reviewer = reviewer;
 		this.score = null;
+		
+		product.addEvaluation(this);
+		reviewer.addEvaluation(this);
 	}
 
 	public boolean isDone() {

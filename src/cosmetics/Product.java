@@ -34,7 +34,7 @@ public class Product {
 		}
 		
 		if (!evaluation.getReviewer().canEvaluate(this)) {
-			// throw new CustomException(); // Should be changed to a custom exception
+			// throw new NullPointerException(); // Should be changed to a custom exception
 			return;
 		}
 		

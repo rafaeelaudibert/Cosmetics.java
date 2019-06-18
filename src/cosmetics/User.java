@@ -56,11 +56,9 @@ public class User {
 			return false;
 		}
 		
-		if (!(this.evaluations.get(product.getGroup()) == null)) {
-			for (Evaluation evaluation : this.evaluations.get(product.getGroup())) {
-				if (evaluation.getProduct().getId() == product.getId()) {
-					return false;
-				}
+		if (this.getEvaluationsFromGroup(product.getGroup()) != null) {
+			if (this.getEvaluationsFromGroup(product.getGroup()).stream().anyMatch((Evaluation e) -> e.getProduct() == product)) {
+				return false;
 			}
 		}
 		return true;

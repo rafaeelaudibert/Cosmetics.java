@@ -145,6 +145,7 @@ public class GroupTest {
 		spfB.addProduct(avonCCCream);
 		
 		spfC.addProduct(lorealDDCream);
+		spfC.addProduct(laRocheCCCream);
 		
 		// Adicionando usuários aos grupos (não precisamos pegar a exceção pois é garantido disso funcionar)
 		userJoao.addGroup(spfA);
@@ -187,15 +188,15 @@ public class GroupTest {
 
 	}
 		
-	@Test	
-	public void allocateTest() throws Exception {
-		Group group = spfA;
-		int numMembers = 3;
-		group.allocate(numMembers);				
-		
-		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
-		assertTrue(group.testAllocate());
-	}
+//	@Test	
+//	public void allocateTest() throws Exception {
+//		Group group = spfA;
+//		int numMembers = 3;
+//		group.allocate(numMembers);				
+//		
+//		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
+//		assertTrue(group.testAllocate());
+//	}
 	
 	@Test
 	public void getOrderedCandidateReviewersTest() {
@@ -206,15 +207,22 @@ public class GroupTest {
 		
 		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Initial ordering
 		
-		Evaluation evaluation = new Evaluation(userJoao, laRocheCCCream, spfB);
+		Evaluation evaluation = new Evaluation(userJoao, laRocheCCCream);
+		System.out.println(userJoao.getEvaluationsFromGroup(laRocheCCCream.getGroup()));
 		userJoao.addEvaluation(evaluation);
+		System.out.println(userJoao.getEvaluationsFromGroup(laRocheCCCream.getGroup()));
+		System.out.println(laRocheCCCream.getEvaluations());
 		laRocheCCCream.addEvaluation(evaluation);
+		System.out.println(laRocheCCCream.getEvaluations());
 		ordered_users.remove(0);
 		ordered_users.add(userJoao);
 		
+		System.out.println(ordered_users);
+		System.out.println(spfB.getOrderedCandidateReviewers(avonCCCream));
+		
 		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Joao has a product assigned, so it goes to the end of the list
 		
-		Evaluation evaluation2 = new Evaluation(userSuzana, avonCCCream, spfB);
+		Evaluation evaluation2 = new Evaluation(userSuzana, avonCCCream);
 		userSuzana.addEvaluation(evaluation2);
 		avonCCCream.addEvaluation(evaluation2);
 		ordered_users.remove(1);

@@ -37,11 +37,8 @@ public class Group {
 	}
 
 	private void addEvaluation(Product product, User reviewer) {
-		Evaluation evaluation = new Evaluation(reviewer, product, this);
-		
+		Evaluation evaluation = new Evaluation(reviewer, product); // Already configures the evaluations to the Product and the User
 		evaluations.get(product).add(evaluation);
-		reviewer.addEvaluation(evaluation);
-		product.addEvaluation(evaluation);
 	}
 
 	public void allocate(int numMembers) throws Exception {
@@ -90,11 +87,6 @@ public class Group {
 				.sorted(Comparator.comparing((User user) -> user.getEvaluationsFromGroup(this).size())
 						.thenComparing(User::getId))
 				.collect(Collectors.toCollection(ArrayList::new));
-//		return members.parallelStream()
-//				.filter(user -> user.canEvaluate(product))
-//				.distinct()
-//				.sorted(Comparator.comparing(User::getId))
-//				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
@@ -140,8 +132,9 @@ public class Group {
 		return true;
 	}
 
-	public void addMember(User newMember) {
-			this.members.add(newMember);
+	public void addMember(User newMember) throws Exception {
+			this.members.add(newMember);			
+			newMember.addGroup(this); // Throws exception, but shouldn't throw in this case so we don't handle it
 	}
 	
 	public void addProduct(Product product) {
