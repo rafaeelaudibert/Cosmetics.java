@@ -37,14 +37,11 @@ public class Group {
 	}
 
 	private void addEvaluation(Product product, User reviewer) {
-		Evaluation evaluation = new Evaluation(reviewer, product);
-		
-		evaluations.get(product).add(evaluation);
 		try {
-			reviewer.addEvaluation(evaluation);
-			product.addEvaluation(evaluation);
-		}catch(Exception e) {
-			System.out.println("Erro adicionando a evaluation ao usuário (Possivelmente incompatíveis)");
+			Evaluation evaluation = new Evaluation(reviewer, product); // Already configures the evaluations to the Product and the User
+			evaluations.get(product).add(evaluation);
+		} catch (Exception e) {
+			System.out.println("[ERROR] Error when adding evaluation for " + product.getName() + ". Probably incompatible with the User.");
 		}
 	}
 
@@ -66,7 +63,7 @@ public class Group {
 		}
 		
 		// Mark the group as allocated
-		this.allocated = true;
+		this.setAllocated();
 	}
 
 	public boolean evaluationDone() {	
@@ -80,16 +77,9 @@ public class Group {
 		}
 
 	public List<Product> getAcceptableProducts() {
-//		return products.parallelStream()
-//				.filter(product -> product.isAcceptable())
-//				.collect(Collectors.toCollection(ArrayList::new));
-		List<Product> acceptable = new ArrayList<Product>();
-		for(Product product: this.products) {
-			if(product.isAcceptable()) {
-				acceptable.add(product);
-			}
-		}
-		return acceptable;
+		return products.parallelStream()
+				.filter(product -> product.isAcceptable())
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public List<Product> getNotAcceptableProducts() {
@@ -105,11 +95,6 @@ public class Group {
 				.sorted(Comparator.comparing((User user) -> user.getEvaluationsFromGroup(this).size())
 						.thenComparing(User::getId))
 				.collect(Collectors.toCollection(ArrayList::new));
-//		return members.parallelStream()
-//				.filter(user -> user.canEvaluate(product))
-//				.distinct()
-//				.sorted(Comparator.comparing(User::getId))
-//				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	private List<Product> getOrderedProducts() {
@@ -138,7 +123,16 @@ public class Group {
 			this.products.add(product);
 	}
 
-	public Map<Product,List<Evaluation>>getEvaluations() {
+	public Map<Product,List<Evaluation>> getEvaluations() {
 		return this.evaluations;
+}
+	
+	public void setAllocated() {
+		this.allocated = true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Group " + name + " | Allocated: " + allocated;
 	}
 }

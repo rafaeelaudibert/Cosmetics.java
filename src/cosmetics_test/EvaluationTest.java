@@ -26,7 +26,7 @@ public class EvaluationTest {
 	
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		// Definindo categorias para teste
 		cream = new Category("creme");
 		categoryListCream = new ArrayList<Category>();
@@ -42,8 +42,7 @@ public class EvaluationTest {
 		creamProduct = new Product(01, "Creme X", userJoao, cream, groupA);
 		
 		groupA.addProduct(creamProduct);
-		groupA.addMember(userJoao);
-	
+		groupA.addMember(userJoao);	
 	}
 	
 
@@ -57,7 +56,7 @@ public class EvaluationTest {
 	}
 	
 	@Test
-	public void isDoneFalseTest() {
+	public void isDoneFalseTest() throws Exception {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		assertFalse(evaluation.isDone());

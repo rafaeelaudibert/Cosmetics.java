@@ -22,7 +22,7 @@ public class ProductTest {
 	Group group;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception{
 		// Definindo categorias para teste
 		creamCategory = new Category("creme");
 		lotionCategory = new Category("locao");
@@ -62,11 +62,11 @@ public class ProductTest {
 	
 	// Testando addEvaluation
 	@Test
-	public void addEvaluationValid() {
-		Evaluation evaluation = new Evaluation(userJoao, cream);
-		
+	public void addEvaluationValid() throws Exception {		
 		int old_size = cream.getEvaluations().size();
-		cream.addEvaluation(evaluation);
+		Evaluation evaluation = new Evaluation(userJoao, cream);
+				
+		// cream.addEvaluation(evaluation); // Não rodamos essa linha de código, pois new Evaluation já roda isso
 		
 		assertTrue(cream.getEvaluations().contains(evaluation));
 		assertTrue(cream.getEvaluations().size() > old_size);
@@ -78,7 +78,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void addEvaluationNonPermittedUser() {
+	public void addEvaluationNonPermittedUser() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
 		shampoo.addEvaluation(evaluation);
@@ -86,7 +86,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void addEvaluationWrongProduct() {
+	public void addEvaluationWrongProduct() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
 		lotion.addEvaluation(evaluation);
@@ -96,18 +96,14 @@ public class ProductTest {
 	// Test addScore
 	
 	@Test
-	public void addScoreValid() {
+	public void addScoreValid() throws Exception {
 		int SCORE = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
-		
-		try {
-			cream.addScore(userJoao, SCORE);
-			assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == SCORE);
-		} catch(Exception e) {
-			fail(); // If it raises an Exception, doesn't work, it is an error
-		}
+	
+		cream.addScore(userJoao, SCORE);
+		assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == SCORE);
 	}
 	
 	@Test(expected=Exception.class)
@@ -163,21 +159,17 @@ public class ProductTest {
 	
 	// Test getAverageScore
 	@Test
-	public void getAverageScoreValid() {
-		try {
-			Evaluation evaluation1 = new Evaluation(userJoao, cream);
-			Evaluation evaluation2 = new Evaluation(userMateus, cream);
-			
-			cream.addEvaluation(evaluation1);		
-			cream.addScore(userJoao, -2);
-			
-			cream.addEvaluation(evaluation2);
-			cream.addScore(userMateus, 1);
-			
-			assertTrue(cream.getAverageScore() == (-2.0 + 1.0) / 2.0);
-		} catch (Exception e) {
-			fail(); // Shouldn't fail with this code
-		}
+	public void getAverageScoreValid() throws Exception {
+		Evaluation evaluation1 = new Evaluation(userJoao, cream);
+		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+		
+		cream.addEvaluation(evaluation1);		
+		cream.addScore(userJoao, -2);
+		
+		cream.addEvaluation(evaluation2);
+		cream.addScore(userMateus, 1);
+		
+		assertTrue(cream.getAverageScore() == (-2.0 + 1.0) / 2.0);
 	}
 	
 	@Test
@@ -187,62 +179,50 @@ public class ProductTest {
 	
 	// Test isAcceptable
 	@Test
-	public void isAcceptableValidTrue() {
-		try {
-			Evaluation evaluation1 = new Evaluation(userJoao, cream);
-			Evaluation evaluation2 = new Evaluation(userMateus, cream);
-			
-			cream.addEvaluation(evaluation1);		
-			cream.addScore(userJoao, 3);
-			
-			cream.addEvaluation(evaluation2);
-			cream.addScore(userMateus, 0);
-			
-			assertTrue(cream.isAcceptable());
-		} catch (Exception e) {
-			fail(); // Shouldn't fail with this code
-		}
+	public void isAcceptableValidTrue() throws Exception {
+		Evaluation evaluation1 = new Evaluation(userJoao, cream);
+		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+		
+		cream.addEvaluation(evaluation1);		
+		cream.addScore(userJoao, 3);
+		
+		cream.addEvaluation(evaluation2);
+		cream.addScore(userMateus, 0);
+		
+		assertTrue(cream.isAcceptable());
 	}
 	
 	@Test
-	public void isAcceptableValidFalse() {
-		try {
-			Evaluation evaluation1 = new Evaluation(userJoao, cream);
-			Evaluation evaluation2 = new Evaluation(userMateus, cream);
-			
-			cream.addEvaluation(evaluation1);		
-			cream.addScore(userJoao, -3);
-			
-			cream.addEvaluation(evaluation2);
-			cream.addScore(userMateus, 0);
-			
-			assertFalse(cream.isAcceptable());
-		} catch (Exception e) {
-			fail(); // Shouldn't fail with this code
-		}
+	public void isAcceptableValidFalse() throws Exception {
+		Evaluation evaluation1 = new Evaluation(userJoao, cream);
+		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+		
+		cream.addEvaluation(evaluation1);		
+		cream.addScore(userJoao, -3);
+		
+		cream.addEvaluation(evaluation2);
+		cream.addScore(userMateus, 0);
+		
+		assertFalse(cream.isAcceptable());
 	}
 	
 	@Test
-	public void isAcceptableValidLimit() {
-		try {
-			Evaluation evaluation1 = new Evaluation(userJoao, cream);
-			Evaluation evaluation2 = new Evaluation(userMateus, cream);
-			
-			cream.addEvaluation(evaluation1);		
-			cream.addScore(userJoao, -3);
-			
-			cream.addEvaluation(evaluation2);
-			cream.addScore(userMateus, 3);
-			
-			assertTrue(cream.isAcceptable());
-		} catch (Exception e) {
-			fail(); // Shouldn't fail with this code
-		}
+	public void isAcceptableValidLimit() throws Exception {
+		Evaluation evaluation1 = new Evaluation(userJoao, cream);
+		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+		
+		cream.addEvaluation(evaluation1);		
+		cream.addScore(userJoao, -3);
+		
+		cream.addEvaluation(evaluation2);
+		cream.addScore(userMateus, 3);
+		
+		assertTrue(cream.isAcceptable());
 	}
 	
 	// Test getEvaluations
 	@Test
-	public void getEvaluationsValid() {
+	public void getEvaluationsValid() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		cream.addEvaluation(evaluation);
 		
@@ -251,7 +231,7 @@ public class ProductTest {
 	
 	// Test getEvaluationFromUser
 	@Test
-	public void getEvaluationFromUserValid() {
+	public void getEvaluationFromUserValid() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		cream.addEvaluation(evaluation);
 		

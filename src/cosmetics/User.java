@@ -23,7 +23,7 @@ public class User {
 		this.groups = new ArrayList<Group>();
 	}
 
-	public void addEvaluation(Evaluation evaluation) throws Exception{
+	public void addEvaluation(Evaluation evaluation) throws Exception {
 		if (evaluation == null) {
 			throw new NullPointerException("Avaliacao null");
 		} else if (evaluation.getReviewer() != this) {
@@ -40,18 +40,17 @@ public class User {
 	}
 
 	public boolean canEvaluate(Product product) {
-		//System.out.println("[User.canEvaluate]: Eu sou "+this.getName()+" avaliando o produto"+product.getName());
 		if (product == null) {
 			return false;
 		}
 
 		if (!(this.categories.contains(product.getCategory()))) {
-			//System.out.println("N„o posso avaliar, ele n„o est· nas minhas categorias");
+			//System.out.println("N√£o posso avaliar, ele n√£o est√° nas minhas categorias");
 			return false;
 		}
 		
 		if (this.state == product.getRequester().getState()) {
-			//System.out.println("N„o posso avaliar, sou do mesmo estado que o requester");
+			//System.out.println("N√£o posso avaliar, sou do mesmo estado que o requester");
 			return false;
 		}
 		

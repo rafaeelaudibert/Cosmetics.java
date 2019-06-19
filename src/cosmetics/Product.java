@@ -35,7 +35,7 @@ public class Product {
 		} 
 		
 		if (!evaluation.getReviewer().canEvaluate(this)) {
-			// throw new CustomException(); // Should be changed to a custom exception
+			// throw new NullPointerException(); // Should be changed to a custom exception
 			return;
 		}  
 		//System.out.println("Consegui");
@@ -54,6 +54,7 @@ public class Product {
 	public Double getAverageScore() {
 		return evaluations.values()
 				.parallelStream()
+				.filter((Evaluation e) -> e.getScore() != null)
 				.mapToDouble(Evaluation::getScore)
 				.average()
 				.orElse(Double.NaN);
@@ -89,5 +90,14 @@ public class Product {
 	
 	public Group getGroup() {
 		return this.group;
+	}
+	
+	@Override
+	public String toString() {
+		return "Product " + id + ": " + name + " | Category: " + category + " | Requester: " + requester + " | Group: " + group.getName();
+	}
+	
+	public String toStringWithGrade() {
+		return "Product " + id + ": " + name + " | Grade: " + this.getAverageScore();
 	}
 }

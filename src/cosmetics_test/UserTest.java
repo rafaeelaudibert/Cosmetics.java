@@ -16,9 +16,9 @@ public class UserTest {
 	List<User> groupAMembers, groupBMembers;
 	Category cream, lotion, shampoo;
 	List<Category> categoryListEmpty, categoryListCream, categoryListCreamShampoo;
-	Product creamProduct, lotionProduct, shampooProduct;
+	Product creamProduct, lotionProduct, shampooProduct, soapProduct;
 	List<Product> productListEmpty, productListShampoo, productListCreamLotion;
-	Group groupA, groupB;
+	Group groupA, groupB, groupC;
 	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct;
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
 	Evaluation evalJoseCreamProduct;
@@ -44,12 +44,15 @@ public class UserTest {
 		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
-		//Definindo os grupos e inicializando os usu�rios contidos no mesmo
+		//Definindo os grupos e inicializando os usu�rios contidos no mesmo
 		groupA = new Group("Grupo A");
 		groupB = new Group("Grupo B");
+		groupC = new Group("Grupo C");
 		
 		groupA.addMember(userJose);
 		groupA.addMember(userPaulo);
+		groupA.addMember(userJoao);
+		userJoao.addGroup(groupA);
 		userJose.addGroup(groupA);
 		userPaulo.addGroup(groupA);
 		
@@ -60,13 +63,14 @@ public class UserTest {
 		
 		// Definindo produtos para teste
 		creamProduct = new Product(01, "Creme X", userPaulo, cream, groupA);
-		lotionProduct = new Product(02, "Locao Y", userJose, lotion, groupA);
-		shampooProduct = new Product(03, "Shampoo Z", userJoao, shampoo, groupB);
+		lotionProduct = new Product(02, "Locao Y", userJose, lotion, groupB);
+		shampooProduct = new Product(03, "Shampoo Z", userMateus, shampoo, groupB);
+		soapProduct = new Product(04, "Sabonete W", userJoao, lotion, groupB);
 
 		//Definindo os produtos por grupo
-		groupA.addProduct(shampooProduct);
+		groupA.addProduct(creamProduct);
 		groupB.addProduct(lotionProduct);
-		groupB.addProduct(creamProduct);
+		groupB.addProduct(shampooProduct);
 		
 	}
 
@@ -88,7 +92,7 @@ public class UserTest {
 	
 	@Test
 	public void canEvaluateTestSameState() {
-		assertFalse(userJose.canEvaluate(shampooProduct));
+		assertFalse(userJose.canEvaluate(soapProduct));
 	}
 
 	@Test
@@ -99,8 +103,8 @@ public class UserTest {
 	// Testando addEvaluationGroup
 	@Test(expected=Exception.class)
 	public void addGroupNotInGroupTest() throws Exception {
-		// UserJoao já deve estar no grupo A
-		userJoao.addGroup(groupA);
+		// UserJoao já deve estar no grupo C
+		userJoao.addGroup(groupC);
 	}
 
 	@Test(expected=Exception.class)

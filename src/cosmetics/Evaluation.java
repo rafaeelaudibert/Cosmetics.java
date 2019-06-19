@@ -4,15 +4,20 @@ public class Evaluation {
 
 	private Integer score;
 	private User reviewer;
+	private Group group;
 	private Product product;
 	
 	private static Integer MINIMUM_SCORE = -3;
 	private static Integer MAXIMUM_SCORE = 3;
 
-	public Evaluation(User reviewer, Product product) {
+	public Evaluation(User reviewer, Product product) throws Exception {
+		this.group = product.getGroup();
 		this.product = product;
 		this.reviewer = reviewer;
 		this.score = null;
+		
+		product.addEvaluation(this);
+		reviewer.addEvaluation(this);
 	}
 
 	public boolean isDone() {
@@ -40,7 +45,7 @@ public class Evaluation {
 	}
 
 	public Group getGroup() {
-		return this.product.getGroup();
+		return this.group;
 	}
 
 	public Product getProduct() {

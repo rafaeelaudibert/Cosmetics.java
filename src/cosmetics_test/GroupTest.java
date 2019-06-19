@@ -94,7 +94,7 @@ public class GroupTest {
 		spfA = new Group("SPF A");
 		spfB = new Group("SPF B");
 		spfC = new Group("SPF C");
-		groupNEUsers = new Group("Grupo sem usuários suficientes");
+		groupNEUsers = new Group("Grupo sem usuï¿½rios suficientes");
 		
 		// Definindo usuarios dos grupos
 		// Grupo a
@@ -180,46 +180,48 @@ public class GroupTest {
 		spfB.addProduct(avonCCCream);
 		
 		spfC.addProduct(lorealDDCream);
+		spfC.addProduct(laRocheCCCream);
 		
 		groupNEUsers.addProduct(productNotCovered);
 		
 		
 	}
 
-	//Testando o método allocate
+	//Testando o mï¿½todo allocate
 	@Test
 	public void allocateTestNormalAllocationFirstProduct() throws Exception{
-		//O primeiro produto da lista de produtos é alocado
+		//O primeiro produto da lista de produtos ï¿½ alocado
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(laRocheCCCream).get(0).getReviewer().equals(userJoao));
 	}
+
 	@Test
 	public void allocateTestNormalAllocationMiddleProduct() throws Exception{
-		//Produtos internos da lista de produtos são alocados
+		//Produtos internos da lista de produtos sï¿½o alocados
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(yvesRocherPowderSPF15).get(0).getReviewer().equals(userJoana));
 	}
 	@Test
 	public void allocateTestNormalAllocationLastProduct() throws Exception{
-		//O útlimo produto da lista de produtos é alocado
+		//O ï¿½tlimo produto da lista de produtos ï¿½ alocado
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(naturaSPF20RostoMatte).get(1).getReviewer().equals(userMiguel));
 	}
 	@Test
 	public void allocateTestNotEnoughUsersToCoverProduct() throws Exception{
-		//Não aloca usuarios a mais quando faltam usuarios para completar a alocação
+		//Nï¿½o aloca usuarios a mais quando faltam usuarios para completar a alocaï¿½ï¿½o
 		groupNEUsers.allocate(3);
 		assertTrue(groupNEUsers.getEvaluations().get(productNotCovered).size() < 3);
 	}
 	
 	@Test(expected=Exception.class)
 	public void allocateTestAlreadyAllocated() throws Exception{
-		//Não pode alocar um grupo que já está alocado
+		//Nï¿½o pode alocar um grupo que jï¿½ estï¿½ alocado
 		spfA.allocate(2);
 		spfA.allocate(1);
 	}
 
-	//Testando o método evaluationDone
+	//Testando o mï¿½todo evaluationDone
 	@Test
 	public void evaluationDoneTestComplete() throws Exception{
 		//Evaluations foram completas
@@ -231,7 +233,7 @@ public class GroupTest {
 	
 	@Test
 	public void evaluationDoneTestNotComplete() throws Exception{
-		//Evaluations não foram completas
+		//Evaluations nï¿½o foram completas
 		groupNEUsers.allocate(2);
 		assertFalse(groupNEUsers.evaluationDone());
 	}
@@ -245,14 +247,14 @@ public class GroupTest {
 	}
 	@Test
 	public void evaluationDoneTestNoEvaluation() throws Exception{
-		//Não há evaluations
+		//Nï¿½o hï¿½ evaluations
 		assertFalse(groupNEUsers.evaluationDone());
 	}
 	
-	//Testando os métodos getAcceptableProducts e getNotAcceptableProducts
+	//Testando os mï¿½todos getAcceptableProducts e getNotAcceptableProducts
 	@Test
 	public void getAceptableProductsTestAllAccepted() throws Exception{
-		//Todo produto é aceito
+		//Todo produto ï¿½ aceito
 		groupNEUsers.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
 		evaluations.get(productNotCovered).get(0).setScore(3);
@@ -260,7 +262,7 @@ public class GroupTest {
 	}
 	@Test
 	public void getNotAceptableProductsTestAllAccepted() throws Exception{
-		//Nenhum produto é rejeitado
+		//Nenhum produto ï¿½ rejeitado
 		groupNEUsers.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
 		evaluations.get(productNotCovered).get(0).setScore(3);
