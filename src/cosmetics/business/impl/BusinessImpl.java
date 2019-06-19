@@ -32,8 +32,8 @@ public class BusinessImpl implements Business {
 		if (groupIndex <= 0 || groupIndex > groups.size()) {
 			throw new NumberFormatException();
 		}
-		
-		groups.get(groupIndex).allocate(numMembers);
+
+		groups.get(groupIndex-1).allocate(numMembers);
 	}
 	
 	// Second stage
@@ -88,7 +88,7 @@ public class BusinessImpl implements Business {
 				.map((Evaluation e) -> e.getReviewer())
 				.distinct()
 				.collect(Collectors.toCollection(ArrayList::new));
-		evaluators.forEach((User u) -> System.out.println(u));
+		evaluators.forEach((User u) -> System.out.println(u + " -> Id " + u.getId()));
 	}
 	
 	private void printAcceptableProducts(List<Product> products) {

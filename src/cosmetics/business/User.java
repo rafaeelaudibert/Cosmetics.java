@@ -27,11 +27,11 @@ public class User {
 		if (evaluation == null) {
 			throw new NullPointerException("Avaliacao null");
 		} else if (evaluation.getReviewer() != this) {
-			throw new Exception();
+			throw new Exception("Evaluation does not belong to this user");
 		} else if (!this.canEvaluate(evaluation.getProduct())) {
-			throw new Exception();
+			throw new Exception("This user cannot evaluate this product");
 		} else if (!this.groups.contains(evaluation.getGroup())) {
-			throw new Exception();
+			throw new Exception("This user is not in the group of this evaluation");
 		} else {
 			this.evaluations.get(evaluation.getGroup()).add(evaluation);
 			
@@ -43,28 +43,26 @@ public class User {
 		if (product == null) {
 			return false;
 		}
-
 		if (!(this.categories.contains(product.getCategory()))) {
 		//	System.out.println("Não posso avaliar, ele não está nas minhas categorias");
 			return false;
 		}
-		
+
 		if (this.state == product.getRequester().getState()) {
 		//	System.out.println("Não posso avaliar, sou do mesmo estado que o requester");
 			return false;
 		}
-		
 		return true;
 	}
 
 	public void addGroup(Group group) throws Exception {
 		
-		if (group == null)
-			throw new NullPointerException();
-		
-		if (!group.getMembers().contains(this))
-			throw new Exception();
-		
+		if (group == null) {
+			throw new NullPointerException("This group is null");
+		}
+		if (!group.getMembers().contains(this)) {
+			throw new Exception("This member is not in this group");
+		}
 		if (!this.groups.contains(group)) {
 			int old_size = this.evaluations.size();
 						
@@ -88,6 +86,7 @@ public class User {
 	}
 	
 	public List<Evaluation> getEvaluationsFromGroup(Group group) {
+	//	System.out.println(this.evaluations.get(group).size());
 		return this.evaluations.get(group);
 	}
 

@@ -35,6 +35,7 @@ public class AllocateCommand extends Command {
 			System.out.println("[ERROR] You didn't inserted a well behaved number. You will be redirected to the main menu");
 		} catch (Exception e) {
 			System.out.println("[ERROR] Oops! A fatal error occured! You will be redirected back to the main menu");
+			System.out.println(e);
 		}
 	}
 	

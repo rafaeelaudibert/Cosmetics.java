@@ -74,6 +74,7 @@ public class Database {
 		this.getUser(3).addGroup(this.getGroup("SPF A"));
 		this.getUser(4).addGroup(this.getGroup("SPF A"));
 		this.getUser(5).addGroup(this.getGroup("SPF A"));
+		this.getUser(6).addGroup(this.getGroup("SPF A"));
 		this.getUser(7).addGroup(this.getGroup("SPF A"));
 		
 		this.getUser(1).addGroup(this.getGroup("SPF B"));

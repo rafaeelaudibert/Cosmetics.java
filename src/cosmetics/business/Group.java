@@ -46,20 +46,22 @@ public class Group {
 	}
 
 	public void allocate(int numMembers) throws Exception {
-		
 		// If the group is already allocated, throw an exception
-		if (this.isAllocated())
-			throw new Exception();
-		
+		if (this.isAllocated()) {
+			throw new Exception("Group already allocated");
+		}
+
 		// Para cada produto, realiza a alocação
 		for (Product product : getOrderedProducts()) {
+
 			List<User> reviewers = getOrderedCandidateReviewers(product);
-			
+
 			evaluations.put(product, new ArrayList<Evaluation>());
-			
+
 			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
 				this.addEvaluation(product, reviewers.get(i));
 			}
+
 		}
 		
 		// Mark the group as allocated
@@ -90,11 +92,12 @@ public class Group {
 
 	private List<User> getOrderedCandidateReviewers(Product product) {
 		return members.parallelStream()
-				.filter(user -> user.canEvaluate(product))
+			.filter(user -> user.canEvaluate(product))
 				.distinct()
 				.sorted(Comparator.comparing((User user) -> user.getEvaluationsFromGroup(this).size())
 						.thenComparing(User::getId))
 				.collect(Collectors.toCollection(ArrayList::new));
+		
 	}
 
 	private List<Product> getOrderedProducts() {

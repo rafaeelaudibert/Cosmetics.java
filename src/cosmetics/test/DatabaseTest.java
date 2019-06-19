@@ -17,5 +17,5 @@ public class DatabaseTest {
 		assertTrue(database.getUsers().size() == 10);
 		assertTrue(database.getProducts().size() == 11);
 	}
-
+	
 }
