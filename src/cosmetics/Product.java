@@ -24,21 +24,23 @@ public class Product {
 	}
 
 	public void addEvaluation(Evaluation evaluation) {
+		//System.out.println("[Product.addEvaluation]: Vou inserir "+evaluation.getProduct().getName()+" "+evaluation.getReviewer().getName());
 		if (evaluation == null) {
 			throw new NullPointerException(); // Should be changed to a custom exception
-		}
+		} 
 		
 		if (evaluation.getProduct() != this) {
 			// throw new CustomException(); // Should be changed to a custom exception
 			return;
-		}
+		} 
 		
 		if (!evaluation.getReviewer().canEvaluate(this)) {
 			// throw new CustomException(); // Should be changed to a custom exception
 			return;
-		}
-		
+		}  
+		//System.out.println("Consegui");
 		this.evaluations.put(evaluation.getReviewer(), evaluation);
+		
 	}
 	
 	public void addScore(User user, Integer score) throws Exception {

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +20,11 @@ public class GroupTest {
 	List<User> spfAMembers, spfBMembers, spfCMembers;
 	Category ddCream, ccCream, bbCream, powderSunscreen, foundationSPF, oilFreeMatteSPF;
 	List<Category> categoryListEmpty, categoryListUser;
-	Product lorealDDCream, avonCCCream, revolutionPowderSunscreen, maybellineBBCream, revlonFoundationSPF20, niveaMatteFaceSPF, laRocheCCCream, yvesRocherPowderSPF15, niveaBBCream, baseOBoticarioSPF20, naturaSPF20RostoMatte;
+	Product lorealDDCream;
+	Product avonCCCream, revolutionPowderSunscreen, maybellineBBCream, revlonFoundationSPF20, niveaMatteFaceSPF, laRocheCCCream, yvesRocherPowderSPF15, niveaBBCream, baseOBoticarioSPF20, naturaSPF20RostoMatte;
+	Product productNotCovered;
 	List<Product> productListEmpty, productListSPFA, productListSPFB, productListSPFC;
-	Group spfA, spfB, spfC;
+	Group spfA, spfB, spfC,groupNEUsers;
 	List<Evaluation> evaluation;
 	Evaluation evaluation1;
 	
@@ -91,6 +94,7 @@ public class GroupTest {
 		spfA = new Group("SPF A");
 		spfB = new Group("SPF B");
 		spfC = new Group("SPF C");
+		groupNEUsers = new Group("Grupo sem usuários suficientes");
 		
 		// Definindo usuarios dos grupos
 		// Grupo a
@@ -118,39 +122,17 @@ public class GroupTest {
 		spfC.addMember(userPedro);
 		spfC.addMember(userCarla);
 		
-		
-		// Definindo os grupos de usuarios
-		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream,spfC);
-		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream,spfB);
-		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen,spfB);
-		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream,spfB);
-		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF,spfB);
-		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF,spfB);
-		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream,spfA);
-		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen,spfA);
-		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream,spfA);
-		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF,spfA);
-		naturaSPF20RostoMatte 		= new Product(11, "Natura SPF20 Rosto Matte", userCarla, oilFreeMatteSPF,spfA);
-		
-		spfA.addProduct(naturaSPF20RostoMatte);
-		spfA.addProduct(baseOBoticarioSPF20);
-		spfA.addProduct(niveaBBCream);
-		spfA.addProduct(yvesRocherPowderSPF15);
-		spfA.addProduct(laRocheCCCream);
-		
-		spfB.addProduct(niveaMatteFaceSPF);
-		spfB.addProduct(revlonFoundationSPF20);
-		spfB.addProduct(maybellineBBCream);
-		spfB.addProduct(revolutionPowderSunscreen);
-		spfB.addProduct(avonCCCream);
-		
-		spfC.addProduct(lorealDDCream);
+		groupNEUsers.addMember(userJoao);
+		groupNEUsers.addMember(userPedro);
+		groupNEUsers.addMember(userAna);
 		
 		// Adicionando usuÃ¡rios aos grupos (nÃ£o precisamos pegar a exceÃ§Ã£o pois Ã© garantido disso funcionar)
 		userJoao.addGroup(spfA);
 		userJoao.addGroup(spfB);
+		userJoao.addGroup(groupNEUsers);
 		userAna.addGroup(spfA);
 		userAna.addGroup(spfB);
+		userAna.addGroup(groupNEUsers);
 		userManoela.addGroup(spfA);
 		userManoela.addGroup(spfB);
 		userJoana.addGroup(spfA);
@@ -167,64 +149,177 @@ public class GroupTest {
 		userSuzana.addGroup(spfC);		
 		userNatasha.addGroup(spfC);		
 		userPedro.addGroup(spfC);
+		userPedro.addGroup(groupNEUsers);
 		userCarla.addGroup(spfC);
-		
-		//Definindo evaluations
-		//evaluation1 = new Evaluation();
-			
-//		spfB.allocate(2);
-//		avonCCCream.addScore(userJoao, 2);
-//		avonCCCream.addScore(userAna, 2);
-//		revolutionPowderSunscreen.addScore(userJoana, -1);
-//		revolutionPowderSunscreen.addScore(userBeatriz, 1);
-//		maybellineBBCream.addScore(userJoao, 1);
-//		maybellineBBCream.addScore(userManoela, 0);
-//		revlonFoundationSPF20.addScore(userJoana, -3);
-//		revlonFoundationSPF20.addScore(userMiguel, -3);
-//		niveaMatteFaceSPF.addScore(userManoela, -1);
-//		niveaMatteFaceSPF.addScore(userMiguel, 0);
-		
 
+		// Definindo os produtos
+		lorealDDCream 				= new Product(1, "L'oreal DD Cream", userJoao, ddCream,spfC);
+		avonCCCream 				= new Product(2, "Avon CC Cream", userBeatriz, ccCream,spfB);
+		revolutionPowderSunscreen 	= new Product(3, "Revolution Powder Sunscreen", userSuzana, powderSunscreen,spfB);
+		maybellineBBCream 			= new Product(4, "Maybelline BB Cream", userNatasha, bbCream,spfB);
+		revlonFoundationSPF20 		= new Product(5, "Revlon Foundation+SPF20", userPedro, foundationSPF,spfB);
+		niveaMatteFaceSPF 			= new Product(6, "Nivea Matte Face SPF", userCarla, oilFreeMatteSPF,spfB);
+		laRocheCCCream 				= new Product(7, "La Roche CC Cream", userBeatriz, ccCream,spfA);
+		yvesRocherPowderSPF15 		= new Product(8, "Yves Rocher Powder+SPF15", userSuzana, powderSunscreen,spfA);
+		niveaBBCream 				= new Product(9, "Nivea BB Cream", userNatasha, bbCream, spfA);
+		baseOBoticarioSPF20 		= new Product(10, "Base O Boticario SPF20", userPedro, foundationSPF,spfA);
+		naturaSPF20RostoMatte 		= new Product(11,"Natura SPF20 Rosto Matte",userCarla,oilFreeMatteSPF,spfA);
+		
+		productNotCovered			= new Product(12,"Produto Especial",userJoao,ccCream,groupNEUsers);
+		
+		spfA.addProduct(naturaSPF20RostoMatte);
+		spfA.addProduct(baseOBoticarioSPF20);
+		spfA.addProduct(niveaBBCream);
+		spfA.addProduct(yvesRocherPowderSPF15);
+		spfA.addProduct(laRocheCCCream);
+		
+		spfB.addProduct(niveaMatteFaceSPF);
+		spfB.addProduct(revlonFoundationSPF20);
+		spfB.addProduct(maybellineBBCream);
+		spfB.addProduct(revolutionPowderSunscreen);
+		spfB.addProduct(avonCCCream);
+		
+		spfC.addProduct(lorealDDCream);
+		
+		groupNEUsers.addProduct(productNotCovered);
+		
+		
 	}
-		
-	@Test	
-	public void allocateTest() throws Exception {
-		Group group = spfA;
-		int numMembers = 3;
-		group.allocate(numMembers);				
-		
-		System.out.println("Grupo: " + group.getName() + " Numero de Membros Alocados: " + numMembers + "\n");
-		assertTrue(group.testAllocate());
+
+	//Testando o método allocate
+	@Test
+	public void allocateTestNormalAllocationFirstProduct() throws Exception{
+		//O primeiro produto da lista de produtos é alocado
+		spfA.allocate(2);
+		assert(spfA.getEvaluations().get(laRocheCCCream).get(0).getReviewer().equals(userJoao));
+	}
+	@Test
+	public void allocateTestNormalAllocationMiddleProduct() throws Exception{
+		//Produtos internos da lista de produtos são alocados
+		spfA.allocate(2);
+		assert(spfA.getEvaluations().get(yvesRocherPowderSPF15).get(0).getReviewer().equals(userJoana));
+	}
+	@Test
+	public void allocateTestNormalAllocationLastProduct() throws Exception{
+		//O útlimo produto da lista de produtos é alocado
+		spfA.allocate(2);
+		assert(spfA.getEvaluations().get(naturaSPF20RostoMatte).get(1).getReviewer().equals(userMiguel));
+	}
+	@Test
+	public void allocateTestNotEnoughUsersToCoverProduct() throws Exception{
+		//Não aloca usuarios a mais quando faltam usuarios para completar a alocação
+		groupNEUsers.allocate(3);
+		assertTrue(groupNEUsers.getEvaluations().get(productNotCovered).size() < 3);
+	}
+	
+	@Test(expected=Exception.class)
+	public void allocateTestAlreadyAllocated() throws Exception{
+		//Não pode alocar um grupo que já está alocado
+		spfA.allocate(2);
+		spfA.allocate(1);
+	}
+
+	//Testando o método evaluationDone
+	@Test
+	public void evaluationDoneTestComplete() throws Exception{
+		//Evaluations foram completas
+		groupNEUsers.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
+		evaluations.get(productNotCovered).get(0).setScore(3);
+		assertTrue(groupNEUsers.evaluationDone());
 	}
 	
 	@Test
-	public void getOrderedCandidateReviewersTest() {
-		ArrayList<User> ordered_users = new ArrayList<User>();
-		ordered_users.add(userJoao);
-		ordered_users.add(userAna);
-		ordered_users.add(userSuzana);
-		
-		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Initial ordering
-		
-		Evaluation evaluation = new Evaluation(userJoao, laRocheCCCream, spfB);
-		userJoao.addEvaluation(evaluation);
-		laRocheCCCream.addEvaluation(evaluation);
-		ordered_users.remove(0);
-		ordered_users.add(userJoao);
-		
-		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Joao has a product assigned, so it goes to the end of the list
-		
-		Evaluation evaluation2 = new Evaluation(userSuzana, avonCCCream, spfB);
-		userSuzana.addEvaluation(evaluation2);
-		avonCCCream.addEvaluation(evaluation2);
-		ordered_users.remove(1);
-		
-		System.out.println(ordered_users);
-		System.out.println(spfB.getOrderedCandidateReviewers(avonCCCream));
-		
-		assertTrue(spfB.getOrderedCandidateReviewers(avonCCCream).equals(ordered_users)); // Suzana has the current product assigned, so it should be not in the list anymore
-		
+	public void evaluationDoneTestNotComplete() throws Exception{
+		//Evaluations não foram completas
+		groupNEUsers.allocate(2);
+		assertFalse(groupNEUsers.evaluationDone());
 	}
-
+	
+	@Test 
+	public void evalluationDoneTestPartiallyComplete() throws Exception{
+		spfA.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
+		evaluations.get(laRocheCCCream).get(0).setScore(1);
+		assertFalse(spfA.evaluationDone());
+	}
+	@Test
+	public void evaluationDoneTestNoEvaluation() throws Exception{
+		//Não há evaluations
+		assertFalse(groupNEUsers.evaluationDone());
+	}
+	
+	//Testando os métodos getAcceptableProducts e getNotAcceptableProducts
+	@Test
+	public void getAceptableProductsTestAllAccepted() throws Exception{
+		//Todo produto é aceito
+		groupNEUsers.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
+		evaluations.get(productNotCovered).get(0).setScore(3);
+		assert(groupNEUsers.getAcceptableProducts().contains(productNotCovered));
+	}
+	@Test
+	public void getNotAceptableProductsTestAllAccepted() throws Exception{
+		//Nenhum produto é rejeitado
+		groupNEUsers.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
+		evaluations.get(productNotCovered).get(0).setScore(3);
+		assert(groupNEUsers.getNotAcceptableProducts().size() == 0);
+	}
+	@Test
+	public void getAcceptableProductsTestSomeAccepted() throws Exception{
+		spfA.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
+		List<Product> expectedAcceptableProducts = new ArrayList<Product>();
+		expectedAcceptableProducts.add(naturaSPF20RostoMatte);
+		expectedAcceptableProducts.add(baseOBoticarioSPF20);
+		expectedAcceptableProducts.add(yvesRocherPowderSPF15);
+		expectedAcceptableProducts.add(laRocheCCCream);
+		
+		//Aceitavel
+		evaluations.get(laRocheCCCream).get(0).setScore(2);
+		evaluations.get(laRocheCCCream).get(1).setScore(3);
+		//Aceitavel
+		evaluations.get(yvesRocherPowderSPF15).get(0).setScore(1);
+		evaluations.get(yvesRocherPowderSPF15).get(1).setScore(-1);
+		//Nao aceitavel
+		evaluations.get(niveaBBCream).get(0).setScore(0);
+		evaluations.get(niveaBBCream).get(1).setScore(-2);
+		//Aceitavel
+		evaluations.get(baseOBoticarioSPF20).get(0).setScore(-1);
+		evaluations.get(baseOBoticarioSPF20).get(1).setScore(2);
+		//Aceitavel
+		evaluations.get(naturaSPF20RostoMatte).get(0).setScore(1);
+		evaluations.get(naturaSPF20RostoMatte).get(1).setScore(2);
+		
+		assert(spfA.getAcceptableProducts().equals(expectedAcceptableProducts));
+	}
+	
+	@Test
+	public void getNotAcceptableProductsTestSomeAccepted() throws Exception{
+		spfA.allocate(2);
+		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
+		List<Product> expectedNotAcceptableProducts = new ArrayList<Product>();
+		expectedNotAcceptableProducts.add(niveaBBCream);
+		
+		//Aceitavel
+		evaluations.get(laRocheCCCream).get(0).setScore(2);
+		evaluations.get(laRocheCCCream).get(1).setScore(3);
+		//Aceitavel
+		evaluations.get(yvesRocherPowderSPF15).get(0).setScore(1);
+		evaluations.get(yvesRocherPowderSPF15).get(1).setScore(-1);
+		//Nao aceitavel
+		evaluations.get(niveaBBCream).get(0).setScore(0);
+		evaluations.get(niveaBBCream).get(1).setScore(-2);
+		
+		//Aceitavel
+		evaluations.get(baseOBoticarioSPF20).get(0).setScore(-1);
+		evaluations.get(baseOBoticarioSPF20).get(1).setScore(2);
+		//Aceitavel
+		evaluations.get(naturaSPF20RostoMatte).get(0).setScore(1);
+		evaluations.get(naturaSPF20RostoMatte).get(1).setScore(2);
+		
+		assert(spfA.getNotAcceptableProducts().equals(expectedNotAcceptableProducts));
+	}
 }
 

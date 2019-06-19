@@ -37,11 +37,15 @@ public class Group {
 	}
 
 	private void addEvaluation(Product product, User reviewer) {
-		Evaluation evaluation = new Evaluation(reviewer, product, this);
+		Evaluation evaluation = new Evaluation(reviewer, product);
 		
 		evaluations.get(product).add(evaluation);
-		reviewer.addEvaluation(evaluation);
-		product.addEvaluation(evaluation);
+		try {
+			reviewer.addEvaluation(evaluation);
+			product.addEvaluation(evaluation);
+		}catch(Exception e) {
+			System.out.println("Erro adicionando a evaluation ao usuário (Possivelmente incompatíveis)");
+		}
 	}
 
 	public void allocate(int numMembers) throws Exception {
@@ -53,6 +57,7 @@ public class Group {
 		// Para cada produto, realiza a alocaÃ§Ã£o
 		for (Product product : getOrderedProducts()) {
 			List<User> reviewers = getOrderedCandidateReviewers(product);
+			
 			evaluations.put(product, new ArrayList<Evaluation>());
 			
 			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
@@ -64,17 +69,27 @@ public class Group {
 		this.allocated = true;
 	}
 
-	public boolean evaluationDone() {		
+	public boolean evaluationDone() {	
+		if (!isAllocated()) {
+			return false;
+		}
 		return evaluations.values()
 				.parallelStream()
 				.map(evaluationList -> evaluationList.stream().allMatch(Evaluation::isDone))
 				.allMatch(Boolean::valueOf);
-	}
+		}
 
 	public List<Product> getAcceptableProducts() {
-		return products.parallelStream()
-				.filter(product -> product.isAcceptable())
-				.collect(Collectors.toCollection(ArrayList::new));
+//		return products.parallelStream()
+//				.filter(product -> product.isAcceptable())
+//				.collect(Collectors.toCollection(ArrayList::new));
+		List<Product> acceptable = new ArrayList<Product>();
+		for(Product product: this.products) {
+			if(product.isAcceptable()) {
+				acceptable.add(product);
+			}
+		}
+		return acceptable;
 	}
 
 	public List<Product> getNotAcceptableProducts() {
@@ -83,7 +98,7 @@ public class Group {
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
-	public List<User> getOrderedCandidateReviewers(Product product) {
+	private List<User> getOrderedCandidateReviewers(Product product) {
 		return members.parallelStream()
 				.filter(user -> user.canEvaluate(product))
 				.distinct()
@@ -115,36 +130,15 @@ public class Group {
 		return this.name;
 	}
 
-	public boolean testAllocate() {
-		List<Product> products = getOrderedProducts();
-		products.forEach(p -> System.out.println(p.getName()));
-		
-		System.out.println("\n");
-		for (Product p : evaluations.keySet()) {
-			System.out.println("Produto: " + p.getName());
-			for (Evaluation e : evaluations.get(p)) {
-				System.out.println(e.getReviewer().getName());
-			}
-		}
-		if (this.evaluationDone() == true) {
-			List<Product> acceptable = getAcceptableProducts();
-			List<Product> notacceptable = getNotAcceptableProducts();
-			System.out.println("Produtos aceitos: \n");
-			acceptable.forEach(acc-> System.out.println(acc.getName()));
-			System.out.println("Produtos nÃ£o aceitos: \n");
-			notacceptable.forEach(na-> System.out.println(na.getName()));
-		}
-		else {
-			System.out.println("\nNotas Faltando");
-		}
-		return true;
-	}
-
 	public void addMember(User newMember) {
 			this.members.add(newMember);
 	}
 	
 	public void addProduct(Product product) {
 			this.products.add(product);
+	}
+
+	public Map<Product,List<Evaluation>>getEvaluations() {
+		return this.evaluations;
 	}
 }

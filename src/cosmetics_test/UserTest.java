@@ -21,6 +21,7 @@ public class UserTest {
 	Group groupA, groupB;
 	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct;
 	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
+	Evaluation evalJoseCreamProduct;
 
 	@Before
 	public void setUp() throws Exception{
@@ -115,35 +116,32 @@ public class UserTest {
 
 	// Testando addEvaluation
 	@Test(expected=NullPointerException.class)
-	public void addEvaluationTestNull() {
+	public void addEvaluationTestNull() throws Exception{
 		userJoao.addEvaluation(null);
 	}
 
-	@Test
-	public void addEvaluationTestWrongUser() {
-		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct, groupB);
+	@Test(expected=Exception.class)
+	public void addEvaluationTestWrongUser() throws Exception {
+		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct);
 		userJoao.addEvaluation(evalMateusCreamProduct);
-		assertFalse(userJoao.getEvaluationsFromGroup(evalMateusCreamProduct.getGroup()).contains(evalMateusCreamProduct));
 	}
 
-	@Test
-	public void addEvaluationTestIncompatibleProduct() {
-		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct, groupB);
+	@Test(expected=Exception.class)
+	public void addEvaluationTestIncompatibleProduct() throws Exception {
+		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct);
 		userJoao.addEvaluation(evalJoaoShampooProduct);
-		assertFalse(userJoao.getEvaluationsFromGroup(evalJoaoShampooProduct.getGroup()).contains(evalJoaoShampooProduct));
 	}
 
-	@Test
-	public void addEvaluationTestNotExistingGroup() {
-		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct, groupA);
+	@Test(expected=Exception.class)
+	public void addEvaluationTestNotExistingGroup() throws Exception {
+		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct);
 		userJoao.addEvaluation(evalJoaoCreamProductWrongGroup);
-		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProductWrongGroup.getGroup()) == null);
 	}
 
 	@Test
-	public void addEvaluationTestNormalAddition() {
-		evalJoaoCreamProduct = new Evaluation(userJoao, creamProduct, groupB);
-		userJoao.addEvaluation(evalJoaoCreamProduct);
-		assertTrue(userJoao.getEvaluationsFromGroup(evalJoaoCreamProduct.getGroup()).contains(evalJoaoCreamProduct));
+	public void addEvaluationTestNormalAddition() throws Exception {
+		evalJoseCreamProduct = new Evaluation(userJose, creamProduct);
+		userJose.addEvaluation(evalJoseCreamProduct);
+		assertTrue(userJose.getEvaluationsFromGroup(evalJoseCreamProduct.getGroup()).contains(evalJoseCreamProduct));
 	}
 }

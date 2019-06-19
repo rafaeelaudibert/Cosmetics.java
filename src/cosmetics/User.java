@@ -23,46 +23,38 @@ public class User {
 		this.groups = new ArrayList<Group>();
 	}
 
-	public void addEvaluation(Evaluation evaluation) {
-
+	public void addEvaluation(Evaluation evaluation) throws Exception{
 		if (evaluation == null) {
 			throw new NullPointerException("Avaliacao null");
 		} else if (evaluation.getReviewer() != this) {
-			// System.out.println("Usuarios incompativeis");
+			throw new Exception();
 		} else if (!this.canEvaluate(evaluation.getProduct())) {
-			// System.out.println("Usuario e produto incompativeis");
+			throw new Exception();
 		} else if (!this.groups.contains(evaluation.getGroup())) {
-			// System.out.println("Usuario e grupo incompativeis");
+			throw new Exception();
 		} else {
 			this.evaluations.get(evaluation.getGroup()).add(evaluation);
+			
 		}
 
 	}
 
 	public boolean canEvaluate(Product product) {
+		//System.out.println("[User.canEvaluate]: Eu sou "+this.getName()+" avaliando o produto"+product.getName());
 		if (product == null) {
 			return false;
 		}
-		
-		if (product.getCategory() == null) {
-			return false;
-		}
-		
-		if (!this.categories.contains(product.getCategory())) {
+
+		if (!(this.categories.contains(product.getCategory()))) {
+			//System.out.println("Não posso avaliar, ele não está nas minhas categorias");
 			return false;
 		}
 		
 		if (this.state == product.getRequester().getState()) {
+			//System.out.println("Não posso avaliar, sou do mesmo estado que o requester");
 			return false;
 		}
 		
-		if (!(this.evaluations.get(product.getGroup()) == null)) {
-			for (Evaluation evaluation : this.evaluations.get(product.getGroup())) {
-				if (evaluation.getProduct().getId() == product.getId()) {
-					return false;
-				}
-			}
-		}
 		return true;
 	}
 

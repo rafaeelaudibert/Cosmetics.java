@@ -5,13 +5,11 @@ public class Evaluation {
 	private Integer score;
 	private User reviewer;
 	private Product product;
-	private Group group;
 	
 	private static Integer MINIMUM_SCORE = -3;
 	private static Integer MAXIMUM_SCORE = 3;
 
-	public Evaluation(User reviewer, Product product, Group group) {
-		this.group = group;
+	public Evaluation(User reviewer, Product product) {
 		this.product = product;
 		this.reviewer = reviewer;
 		this.score = null;
@@ -42,7 +40,7 @@ public class Evaluation {
 	}
 
 	public Group getGroup() {
-		return this.group;
+		return this.product.getGroup();
 	}
 
 	public Product getProduct() {

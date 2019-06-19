@@ -51,7 +51,7 @@ public class EvaluationTest {
 	@Test
 	public void isDoneTrueTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(1);
 		assertTrue(evaluation.isDone());
 	}
@@ -59,21 +59,21 @@ public class EvaluationTest {
 	@Test
 	public void isDoneFalseTest() {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		assertFalse(evaluation.isDone());
 	}
 	
 	@Test(expected=Exception.class)
 	 public void setScoreSmallerValueTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(-5);
 	}
 	
 	@Test
 	 public void setScoreLowLimitTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(-3);
 		assertTrue(evaluation.getScore() == -3);
 	}
@@ -81,7 +81,7 @@ public class EvaluationTest {
 	@Test
 	 public void setScoreHighLimitTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(3);
 		assertTrue(evaluation.getScore() == 3);
 	}
@@ -89,7 +89,7 @@ public class EvaluationTest {
 	@Test(expected=Exception.class)
 	 public void setScoreAfterSetTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(0);
 		evaluation.setScore(-5);
 	}
@@ -97,7 +97,7 @@ public class EvaluationTest {
 	@Test(expected=Exception.class)
 	 public void setScoreNullTest() throws Exception {
 		Evaluation evaluation;
-		evaluation = new Evaluation(userJoao, creamProduct, groupA);
+		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(null);
 	}
 	
