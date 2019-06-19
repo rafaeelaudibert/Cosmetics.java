@@ -3,6 +3,7 @@ package cosmetics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Database {
 	private List<Category> categories;
@@ -116,6 +117,10 @@ public class Database {
 		evaluation = new Evaluation(getUser(6), getProduct(6));
 		evaluation.setScore(0);
 		
+		// Configure allocated groups
+		this.getGroup("SPF B").setAllocated();
+		this.getGroup("SPF C").setAllocated();
+		
 	}
 	
 	public List<User> getUsers(){
@@ -128,6 +133,12 @@ public class Database {
 	
 	public List<Group> getGroups(){
 		return groups;
+	}
+	
+	public List<Group> getNonAllocatedGroups(){
+		return getGroups().parallelStream()
+				.filter((Group g) -> !g.isAllocated())
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 	
 	public List<Category> getCategories(){

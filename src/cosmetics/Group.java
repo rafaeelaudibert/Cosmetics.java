@@ -58,7 +58,7 @@ public class Group {
 		}
 		
 		// Mark the group as allocated
-		this.allocated = true;
+		this.setAllocated();
 	}
 
 	public boolean evaluationDone() {		
@@ -69,7 +69,7 @@ public class Group {
 	}
 
 	public List<Product> getAcceptableProducts() {
-		return products.parallelStream()
+		return products.stream()
 				.filter(product -> product.isAcceptable())
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
@@ -139,5 +139,14 @@ public class Group {
 	
 	public void addProduct(Product product) {
 			this.products.add(product);
+	}
+	
+	public void setAllocated() {
+		this.allocated = true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Group " + name + " | Allocated: " + allocated;
 	}
 }
