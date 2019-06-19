@@ -1,4 +1,4 @@
-package cosmetics;
+package cosmetics.business;
 
 import java.util.ArrayList;
 import java.util.HashMap;

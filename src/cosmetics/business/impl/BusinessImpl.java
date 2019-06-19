@@ -1,9 +1,16 @@
-package cosmetics;
+package cosmetics.business.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import cosmetics.business.Business;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
+import cosmetics.business.database.Database;
 
 public class BusinessImpl implements Business {
 	private Database database;

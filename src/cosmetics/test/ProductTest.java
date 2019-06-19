@@ -1,4 +1,4 @@
-package cosmetics_test;
+package cosmetics.test;
 
 import static org.junit.Assert.*;
 
@@ -8,11 +8,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import cosmetics.Category;
-import cosmetics.Evaluation;
-import cosmetics.Group;
-import cosmetics.Product;
-import cosmetics.User;
+import cosmetics.business.Category;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
 
 public class ProductTest {
 	
@@ -46,7 +46,8 @@ public class ProductTest {
 		group = new Group("Grupo");
 		group.addMember(userJoao);
 		group.addMember(userMateus);
-		
+		userJoao.addGroup(group);
+		userMateus.addGroup(group);
 		
 		// Definindo produtos para teste
 		cream = new Product(01, "Creme X", userPaulo, creamCategory,group);
@@ -77,7 +78,7 @@ public class ProductTest {
 		cream.addEvaluation(null);
 	}
 	
-	@Test
+	@Test(expected=Exception.class)
 	public void addEvaluationNonPermittedUser() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
@@ -85,12 +86,12 @@ public class ProductTest {
 		assertFalse(shampoo.getEvaluations().contains(evaluation));
 	}
 	
-	@Test
+	@Test(expected=Exception.class)
 	public void addEvaluationWrongProduct() throws Exception {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
 		lotion.addEvaluation(evaluation);
-		assertFalse(shampoo.getEvaluations().contains(evaluation));
+		//assertFalse(shampoo.getEvaluations().contains(evaluation));
 	}
 	
 	// Test addScore

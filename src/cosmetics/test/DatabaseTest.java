@@ -1,10 +1,10 @@
-package cosmetics_test;
+package cosmetics.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cosmetics.Database;
+import cosmetics.business.database.Database;
 
 public class DatabaseTest {
 

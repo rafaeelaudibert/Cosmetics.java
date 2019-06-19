@@ -1,4 +1,5 @@
 package cosmetics;
+import cosmetics.ui.*;
 
 public final class Cosmetics {
 

@@ -1,9 +1,15 @@
-package cosmetics;
+package cosmetics.business.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import cosmetics.business.Category;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
 
 public class Database {
 	private List<Category> categories;
@@ -62,7 +68,30 @@ public class Database {
 		this.getGroup("SPF C").addMember(this.getUser(8));
 		this.getGroup("SPF C").addMember(this.getUser(9));
 		this.getGroup("SPF C").addMember(this.getUser(10));
-				
+			
+		this.getUser(1).addGroup(this.getGroup("SPF A"));
+		this.getUser(2).addGroup(this.getGroup("SPF A"));
+		this.getUser(3).addGroup(this.getGroup("SPF A"));
+		this.getUser(4).addGroup(this.getGroup("SPF A"));
+		this.getUser(5).addGroup(this.getGroup("SPF A"));
+		this.getUser(7).addGroup(this.getGroup("SPF A"));
+		
+		this.getUser(1).addGroup(this.getGroup("SPF B"));
+		this.getUser(2).addGroup(this.getGroup("SPF B"));
+		this.getUser(3).addGroup(this.getGroup("SPF B"));
+		this.getUser(4).addGroup(this.getGroup("SPF B"));
+		this.getUser(5).addGroup(this.getGroup("SPF B"));
+		this.getUser(6).addGroup(this.getGroup("SPF B"));
+		this.getUser(7).addGroup(this.getGroup("SPF B"));
+		
+		this.getUser(4).addGroup(this.getGroup("SPF C"));
+		this.getUser(5).addGroup(this.getGroup("SPF C"));
+		this.getUser(6).addGroup(this.getGroup("SPF C"));
+		this.getUser(7).addGroup(this.getGroup("SPF C"));
+		this.getUser(8).addGroup(this.getGroup("SPF C"));
+		this.getUser(9).addGroup(this.getGroup("SPF C"));
+		this.getUser(10).addGroup(this.getGroup("SPF C"));
+		
 		// Create pre-defined Product instances
 		products = new ArrayList<Product>();
 		products.add(new Product(1, "L'oreal DD Cream", getUser(1), getCategory("DD Cream"), getGroup("SPF C")));

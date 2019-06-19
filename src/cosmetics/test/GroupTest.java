@@ -1,4 +1,4 @@
-package cosmetics_test;
+package cosmetics.test;
 
 import static org.junit.Assert.*;
 
@@ -9,11 +9,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import cosmetics.Category;
-import cosmetics.Evaluation;
-import cosmetics.Group;
-import cosmetics.Product;
-import cosmetics.User;
+import cosmetics.business.Category;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
 
 public class GroupTest {
 	User userJoao, userAna, userManoela, userJoana, userMiguel, userBeatriz, userSuzana, userNatasha, userPedro, userCarla;

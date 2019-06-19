@@ -1,4 +1,4 @@
-package cosmetics_test;
+package cosmetics.test;
 
 import static org.junit.Assert.*;
 
@@ -8,15 +8,15 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import cosmetics.Category;
-import cosmetics.Evaluation;
-import cosmetics.Group;
-import cosmetics.Product;
-import cosmetics.User;
+import cosmetics.business.Category;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
 
 public class EvaluationTest {
 
-	User userJoao;
+	User userJoao,userJose;
 	Category cream;
 	List<Category> categoryListCream;
 	Product creamProduct;
@@ -36,13 +36,15 @@ public class EvaluationTest {
 		groupA = new Group("Grupo A");
 		
 		// Definindo Usuario
+		userJose = new User(02,"Jose", "CE", categoryListCream);
 		userJoao = new User(01, "Joao", "RS", categoryListCream);
 		
 		// Definindo Produto
-		creamProduct = new Product(01, "Creme X", userJoao, cream, groupA);
+		creamProduct = new Product(01, "Creme X", userJose, cream, groupA);
 		
 		groupA.addProduct(creamProduct);
 		groupA.addMember(userJoao);	
+		userJoao.addGroup(groupA);
 	}
 	
 

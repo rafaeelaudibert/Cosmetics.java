@@ -1,4 +1,4 @@
-package cosmetics;
+package cosmetics.business;
 
 import java.util.List;
 import java.util.HashMap;
@@ -45,12 +45,12 @@ public class User {
 		}
 
 		if (!(this.categories.contains(product.getCategory()))) {
-			//System.out.println("Não posso avaliar, ele não está nas minhas categorias");
+		//	System.out.println("Não posso avaliar, ele não está nas minhas categorias");
 			return false;
 		}
 		
 		if (this.state == product.getRequester().getState()) {
-			//System.out.println("Não posso avaliar, sou do mesmo estado que o requester");
+		//	System.out.println("Não posso avaliar, sou do mesmo estado que o requester");
 			return false;
 		}
 		

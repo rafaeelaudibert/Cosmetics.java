@@ -1,4 +1,4 @@
-package cosmetics_test;
+package cosmetics.test;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,11 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import cosmetics.*;
+import cosmetics.business.Category;
+import cosmetics.business.Evaluation;
+import cosmetics.business.Group;
+import cosmetics.business.Product;
+import cosmetics.business.User;
 
 public class UserTest {
 
@@ -138,8 +142,8 @@ public class UserTest {
 
 	@Test(expected=Exception.class)
 	public void addEvaluationTestNotExistingGroup() throws Exception {
-		evalJoaoCreamProductWrongGroup = new Evaluation(userJoao, creamProduct);
-		userJoao.addEvaluation(evalJoaoCreamProductWrongGroup);
+		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct);
+		userMateus.addEvaluation(evalMateusCreamProduct);
 	}
 
 	@Test

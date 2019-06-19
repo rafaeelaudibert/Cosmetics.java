@@ -1,4 +1,6 @@
-package cosmetics;
+package cosmetics.ui.command;
+
+import cosmetics.business.impl.BusinessImpl;
 
 public class ExitCommand extends Command {
 		

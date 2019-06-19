@@ -1,6 +1,8 @@
-package cosmetics;
+package cosmetics.ui.command;
 
 import java.util.Scanner;
+
+import cosmetics.business.impl.BusinessImpl;
 
 public class ReviewCommand extends Command {
 	

@@ -1,8 +1,16 @@
-package cosmetics;
+package cosmetics.ui;
+
+import cosmetics.business.impl.BusinessImpl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import cosmetics.ui.command.AllocateCommand;
+import cosmetics.ui.command.Command;
+import cosmetics.ui.command.ExitCommand;
+import cosmetics.ui.command.ReviewCommand;
+import cosmetics.ui.command.ShowCommand;
 
 public final class AppUI {
 	private Map<String, Command> commands = new LinkedHashMap<String, Command>();

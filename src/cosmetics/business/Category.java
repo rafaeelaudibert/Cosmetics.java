@@ -1,4 +1,4 @@
-package cosmetics;
+package cosmetics.business;
 
 public class Category {
 	private String name;
