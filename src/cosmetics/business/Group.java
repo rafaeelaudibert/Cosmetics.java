@@ -50,7 +50,6 @@ public class Group {
 		if (this.isAllocated()) {
 			throw new Exception("Group already allocated");
 		}
-
 		// Para cada produto, realiza a alocação
 		for (Product product : getOrderedProducts()) {
 
@@ -60,8 +59,8 @@ public class Group {
 
 			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
 				this.addEvaluation(product, reviewers.get(i));
+				System.out.println("Product with ID "+product.getId()+" allocated to user with ID "+reviewers.get(i).getId());
 			}
-
 		}
 		
 		// Mark the group as allocated

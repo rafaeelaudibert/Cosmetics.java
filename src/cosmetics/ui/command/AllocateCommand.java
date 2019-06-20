@@ -30,7 +30,12 @@ public class AllocateCommand extends Command {
 				numMembers = Integer.parseInt(scanner.nextLine());
 			} while (numMembers < MINIMUM_MEMBERS_ALLOCATED || numMembers > MAXIMUM_MEMBERS_ALLOCATED);		
 			
+			System.out.println("Starting allocation...");
+			
 			businessImpl.allocate(groupIndex, numMembers);
+			
+			System.out.println("End of allocation.");
+			
 		} catch (NumberFormatException e) {
 			System.out.println("[ERROR] You didn't inserted a well behaved number. You will be redirected to the main menu");
 		} catch (Exception e) {
