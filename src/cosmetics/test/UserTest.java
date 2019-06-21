@@ -19,15 +19,11 @@ import cosmetics.business.User;
 public class UserTest {
 
 	User userJoao, userJose, userPaulo, userMateus;
-	List<User> groupAMembers, groupBMembers;
 	Category cream, lotion, shampoo;
 	List<Category> categoryListEmpty, categoryListCream, categoryListCreamShampoo;
 	Product creamProduct, lotionProduct, shampooProduct, soapProduct;
-	List<Product> productListEmpty, productListShampoo, productListCreamLotion;
 	Group groupA, groupB, groupC;
-	Evaluation evalJoaoCreamProduct, evalMateusCreamProduct;
-	Evaluation evalJoaoCreamProductWrongGroup, evalJoaoShampooProduct;
-	Evaluation evalJoseCreamProduct;
+	Evaluation evalMateusCreamProduct, evalJoaoShampooProduct, evalJoseCreamProduct;
 
 	@Before
 	public void setUp() throws BusinessException {
@@ -43,44 +39,44 @@ public class UserTest {
 		categoryListCreamShampoo = new ArrayList<Category>();
 		categoryListCreamShampoo.add(cream);
 		categoryListCreamShampoo.add(shampoo);
-		
-		// Definindo usu�rios para teste
+
+		// Definindo usuários para teste
 		userJoao = new User(01, "Joao", "RS", categoryListCream);
 		userMateus = new User(02, "Mateus", "BA", categoryListCream);
 		userJose = new User(03, "Jose", "RS", categoryListCreamShampoo);
 		userPaulo = new User(04, "Paulo", "MG", categoryListEmpty);
 
-		//Definindo os grupos e inicializando os usu�rios contidos no mesmo
+		// Definindo os grupos e inicializando os usuários contidos no mesmo
 		groupA = new Group("Grupo A");
 		groupB = new Group("Grupo B");
 		groupC = new Group("Grupo C");
-		
+
 		groupA.addMember(userJose);
 		groupA.addMember(userPaulo);
 		groupA.addMember(userJoao);
 		userJoao.addGroup(groupA);
 		userJose.addGroup(groupA);
 		userPaulo.addGroup(groupA);
-		
+
 		groupB.addMember(userJoao);
 		groupB.addMember(userMateus);
 		userJoao.addGroup(groupB);
 		userMateus.addGroup(groupB);
-		
+
 		// Definindo produtos para teste
 		creamProduct = new Product(01, "Creme X", userPaulo, cream, groupA);
 		lotionProduct = new Product(02, "Locao Y", userJose, lotion, groupB);
 		shampooProduct = new Product(03, "Shampoo Z", userMateus, shampoo, groupB);
 		soapProduct = new Product(04, "Sabonete W", userJoao, lotion, groupB);
 
-		//Definindo os produtos por grupo
+		// Definindo os produtos por grupo
 		groupA.addProduct(creamProduct);
 		groupB.addProduct(lotionProduct);
 		groupB.addProduct(shampooProduct);
-		
+
 	}
 
-	// Testando canEvaluate
+	// Test canEvaluate
 	@Test
 	public void canEvaluateTestInList() {
 		assertTrue(userJoao.canEvaluate(creamProduct));
@@ -95,7 +91,7 @@ public class UserTest {
 	public void canEvaluateTestNullProduct() {
 		assertFalse(userJose.canEvaluate(null));
 	}
-	
+
 	@Test
 	public void canEvaluateTestSameState() {
 		assertFalse(userJose.canEvaluate(soapProduct));
@@ -106,7 +102,7 @@ public class UserTest {
 		assertFalse(userPaulo.canEvaluate(shampooProduct));
 	}
 
-	// Testando addEvaluationGroup
+	// Test addEvaluationGroup
 	@Test(expected = BusinessException.class)
 	public void addGroupNotInGroupTest() throws BusinessException {
 		userJoao.addGroup(groupC); // UserJoao is already in group C
@@ -123,7 +119,7 @@ public class UserTest {
 		assertTrue(userJoao.getGroups().contains(groupB));
 	}
 
-	// Testando addEvaluation
+	// Test addEvaluation
 	@Test(expected = BusinessException.class)
 	public void addEvaluationTestNull() throws BusinessException {
 		userJoao.addEvaluation(null);
