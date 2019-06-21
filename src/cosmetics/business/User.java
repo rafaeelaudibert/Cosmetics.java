@@ -37,12 +37,16 @@ public class User {
 		this.evaluations.get(evaluation.getGroup()).add(evaluation);		
 	}
 
-	public boolean canEvaluate(Product product) {
-		Boolean null_product = (product == null);
-		Boolean categories_contain_product = this.categories.contains(product.getCategory());
-		Boolean same_state = this.state == product.getRequester().getState();		
-				
-		if (null_product || !categories_contain_product || same_state) {
+	public boolean canEvaluate(Product product) {		
+		if (product == null) {
+			return false;
+		}
+		
+		if (!this.categories.contains(product.getCategory())) {
+			return false;
+		}
+			
+		if (this.state == product.getRequester().getState()) {
 			return false;
 		}
 		
