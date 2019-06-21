@@ -2,8 +2,14 @@ package cosmetics.business;
 
 public class BusinessException extends Exception {
 
-	private static final long serialVersionUID = -551906835171529361L;
-
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = -5049174296539833065L;
+	
+	/**
+	 * Attribute to store the Exception arguments
+	 */
 	private String[] args;
 
 	/**

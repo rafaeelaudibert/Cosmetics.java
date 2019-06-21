@@ -20,7 +20,7 @@ public class Evaluation {
 		reviewer.addEvaluation(this);
 	}
 
-	public boolean isDone() {
+	public Boolean isDone() {
 		if (this.getScore() == null) {
 			return false;
 		}
