@@ -42,7 +42,6 @@ public final class AppUI {
 	
 	private Command getCommand() {
 		Command command;
-		String userInput;
 		
 		do {
 			System.out.println("[INFO] Please choose a valid command below");
