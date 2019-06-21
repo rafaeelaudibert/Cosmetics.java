@@ -66,7 +66,7 @@ public class ProductTest {
 	// Testando addEvaluation
 	@Test
 	public void addEvaluationValid() throws BusinessException {		
-		int old_size = cream.getEvaluations().size();
+		Integer old_size = cream.getEvaluations().size();
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 				
 		// cream.addEvaluation(evaluation); // We don't need to run this LOC, because new Evaluation already calls this function
@@ -100,7 +100,7 @@ public class ProductTest {
 	
 	@Test
 	public void addScoreValid() throws BusinessException {
-		int SCORE = 3;
+		Integer SCORE = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
@@ -124,7 +124,7 @@ public class ProductTest {
 	
 	@Test(expected = BusinessException.class)
 	public void addScoreWithLowerScore() throws BusinessException {
-		int LOWER_BOUND = -3;
+		Integer LOWER_BOUND = -3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
@@ -133,7 +133,7 @@ public class ProductTest {
 	
 	@Test(expected = BusinessException.class)
 	public void addScoreWithHigherScore() throws BusinessException {
-		int UPPER_BOUND = 3;
+		Integer UPPER_BOUND = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
@@ -142,7 +142,7 @@ public class ProductTest {
 	
 	@Test
 	public void addScoreWithLowerBoundScore() throws BusinessException {
-		int LOWER_BOUND = -3;
+		Integer LOWER_BOUND = -3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
@@ -152,7 +152,7 @@ public class ProductTest {
 	
 	@Test
 	public void addScoreWithUpperBoundScore() throws BusinessException {
-		int UPPER_BOUND = 3;
+		Integer UPPER_BOUND = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		

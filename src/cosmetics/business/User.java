@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class User {
 
-	private int id;
+	private Integer id;
 	private String name;
 	private String state;
 	private List<Category> categories;
 	private Map<Group, List<Evaluation>> evaluations;
 	private List<Group> groups;
 
-	public User(int id, String name, String state, List<Category> categories) {
+	public User(Integer id, String name, String state, List<Category> categories) {
 		this.id = id;
 		this.name = name;
 		this.state = state;
@@ -32,22 +32,17 @@ public class User {
 			throw new BusinessException("This user cannot evaluate this product");
 		} else if (!this.groups.contains(evaluation.getGroup())) {
 			throw new BusinessException("This user does not belong the group of this evaluation");
-		} else {
-			this.evaluations.get(evaluation.getGroup()).add(evaluation);			
 		}
-
+		
+		this.evaluations.get(evaluation.getGroup()).add(evaluation);		
 	}
 
 	public boolean canEvaluate(Product product) {
-		if (product == null) {
-			return false;
-		}
-		
-		if (!(this.categories.contains(product.getCategory()))) {
-			return false;
-		}
-
-		if (this.state == product.getRequester().getState()) {
+		Boolean null_product = (product == null);
+		Boolean categories_contain_product = this.categories.contains(product.getCategory());
+		Boolean same_state = this.state == product.getRequester().getState();		
+				
+		if (null_product || !categories_contain_product || same_state) {
 			return false;
 		}
 		
@@ -59,16 +54,14 @@ public class User {
 		if (group == null) {
 			throw new BusinessException("The group passed as parameter cannot be null");
 		}
+		
 		if (!group.getMembers().contains(this)) {
 			throw new BusinessException("This member does not belong to the group passed as parameter");
 		}
-		if (!this.groups.contains(group)) {
-			int old_size = this.evaluations.size();
-						
+		
+		if (!this.groups.contains(group)) {						
 			this.evaluations.put(group, new ArrayList<>());
-			this.groups.add(group);		
-			
-			assert (this.evaluations.size() > old_size);
+			this.groups.add(group);
 		}
 	}
 
@@ -76,7 +69,7 @@ public class User {
 		return this.name;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 

@@ -6,15 +6,15 @@ import java.util.Map;
 
 public class Product {
 
-	private int id;
+	private Integer id;
 	private String name;
 	private Category category;
 	private User requester;
 	private Group group;
 	private Map<User, Evaluation> evaluations;
-	private static int ACCEPTABLE_GRADE = 0;
+	private static Integer ACCEPTABLE_GRADE = 0;
 
-	public Product(int id, String name, User requester, Category category, Group group) {
+	public Product(Integer id, String name, User requester, Category category, Group group) {
 		this.id = id;
 		this.name = name;
 		this.requester = requester;
@@ -57,7 +57,7 @@ public class Product {
 				.orElse(Double.NaN);
 	}
 
-	public boolean isAcceptable() {
+	public Boolean isAcceptable() {
 		return getAverageScore() >= ACCEPTABLE_GRADE;
 	}
 	

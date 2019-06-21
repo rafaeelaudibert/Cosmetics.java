@@ -36,16 +36,12 @@ public class Group {
 		}
 	}
 
-	private void addEvaluation(Product product, User reviewer) {
-		try {
-			Evaluation evaluation = new Evaluation(reviewer, product); // Already configures the evaluations to the Product and the User
-			evaluations.get(product).add(evaluation);
-		} catch (Exception e) {
-			System.out.println("[ERROR] Error when adding evaluation for " + product.getName() + ". Probably incompatible with the User with ID " + reviewer.getId());
-		}
+	private void addEvaluation(Product product, User reviewer) throws BusinessException {		
+		Evaluation evaluation = new Evaluation(reviewer, product); // Already configures the evaluations to the Product and the User
+		evaluations.get(product).add(evaluation);
 	}
 
-	public void allocate(int numMembers) throws BusinessException {
+	public void allocate(Integer numMembers) throws BusinessException {
 		// If the group is already allocated, throw an exception
 		if (this.isAllocated()) {
 			throw new BusinessException("This group has already been allocated");
@@ -58,7 +54,7 @@ public class Group {
 
 			evaluations.put(product, new ArrayList<Evaluation>());
 
-			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
+			for (Integer i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
 				this.addEvaluation(product, reviewers.get(i));
 				System.out.println("[INFO] Product with ID " + product.getId() + " allocated to user with ID " + reviewers.get(i).getId());
 			}
@@ -76,7 +72,7 @@ public class Group {
 				.parallelStream()
 				.map(evaluationList -> evaluationList.stream().allMatch(Evaluation::isDone))
 				.allMatch(Boolean::valueOf);
-		}
+	}
 
 	public List<Product> getAcceptableProducts() {
 		return products.parallelStream()
@@ -92,7 +88,7 @@ public class Group {
 
 	private List<User> getOrderedCandidateReviewers(Product product) {
 		return members.parallelStream()
-			.filter(user -> user.canEvaluate(product))
+				.filter(user -> user.canEvaluate(product))
 				.distinct()
 				.sorted(Comparator.comparing((User user) -> user.getEvaluationsFromGroup(this).size())
 						.thenComparing(User::getId))
@@ -106,8 +102,20 @@ public class Group {
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
+	public void addMember(User newMember) {
+			this.members.add(newMember);
+	}
+	
+	public void addProduct(Product product) {
+			this.products.add(product);
+	}
+
 	public boolean isAllocated() {
 		return this.allocated;
+	}
+	
+	public void setAllocated() {
+		this.allocated = true;
 	}
 
 	public List<User> getMembers() {
@@ -118,20 +126,8 @@ public class Group {
 		return this.name;
 	}
 
-	public void addMember(User newMember) {
-			this.members.add(newMember);
-	}
-	
-	public void addProduct(Product product) {
-			this.products.add(product);
-	}
-
 	public Map<Product,List<Evaluation>> getEvaluations() {
 		return this.evaluations;
-}
-	
-	public void setAllocated() {
-		this.allocated = true;
 	}
 	
 	@Override
