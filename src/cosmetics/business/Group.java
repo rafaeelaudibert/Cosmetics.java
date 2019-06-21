@@ -53,7 +53,7 @@ public class Group {
 			List<User> reviewers = getOrderedCandidateReviewers(product);
 
 			evaluations.put(product, new ArrayList<Evaluation>());
-
+			
 			for (Integer i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
 				this.addEvaluation(product, reviewers.get(i));
 				System.out.println("[INFO] Product with ID " + product.getId() + " allocated to user with ID " + reviewers.get(i).getId());
@@ -68,6 +68,7 @@ public class Group {
 		if (!isAllocated()) {
 			return false;
 		}
+		
 		return evaluations.values()
 				.parallelStream()
 				.map(evaluationList -> evaluationList.stream().allMatch(Evaluation::isDone))

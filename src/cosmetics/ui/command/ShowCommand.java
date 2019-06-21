@@ -19,10 +19,9 @@ public class ShowCommand extends Command {
 		System.out.println("[INFO] Enter the index (starting at 1 above) of the group you want to see the products: ");
 		businessImpl.printGroups();
 		System.out.println();
-		String userInput = scanner.nextLine();
 		
 		try {
-			Integer groupIndex = Integer.parseInt(userInput);
+			Integer groupIndex = Integer.parseInt(scanner.nextLine());
 			businessImpl.showGroupProducts(groupIndex);
 		} catch (NumberFormatException e) {
 			System.out.println("[ERROR] You didn't inserted a well behaved index. You will be redirected to the main menu");
