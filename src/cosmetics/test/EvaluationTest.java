@@ -1,6 +1,7 @@
 package cosmetics.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.Category;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
@@ -26,7 +28,7 @@ public class EvaluationTest {
 	
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws BusinessException {
 		// Definindo categorias para teste
 		cream = new Category("creme");
 		categoryListCream = new ArrayList<Category>();
@@ -50,7 +52,7 @@ public class EvaluationTest {
 
 	
 	@Test
-	public void isDoneTrueTest() throws Exception {
+	public void isDoneTrueTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(1);
@@ -58,21 +60,21 @@ public class EvaluationTest {
 	}
 	
 	@Test
-	public void isDoneFalseTest() throws Exception {
+	public void isDoneFalseTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		assertFalse(evaluation.isDone());
 	}
 	
 	@Test(expected=Exception.class)
-	 public void setScoreSmallerValueTest() throws Exception {
+	 public void setScoreSmallerValueTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(-5);
 	}
 	
 	@Test
-	 public void setScoreLowLimitTest() throws Exception {
+	 public void setScoreLowLimitTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(-3);
@@ -80,23 +82,23 @@ public class EvaluationTest {
 	}
 	
 	@Test
-	 public void setScoreHighLimitTest() throws Exception {
+	 public void setScoreHighLimitTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(3);
 		assertTrue(evaluation.getScore() == 3);
 	}
 	
-	@Test(expected=Exception.class)
-	 public void setScoreAfterSetTest() throws Exception {
+	@Test(expected = BusinessException.class)
+	 public void setScoreAfterSetTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(0);
 		evaluation.setScore(-5);
 	}
 	
-	@Test(expected=Exception.class)
-	 public void setScoreNullTest() throws Exception {
+	@Test(expected = BusinessException.class)
+	 public void setScoreNullTest() throws BusinessException {
 		Evaluation evaluation;
 		evaluation = new Evaluation(userJoao, creamProduct);
 		evaluation.setScore(null);

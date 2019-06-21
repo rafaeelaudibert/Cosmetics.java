@@ -2,6 +2,7 @@ package cosmetics.ui.command;
 
 import java.util.Scanner;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.impl.BusinessImpl;
 
 public class ReviewCommand extends Command {
@@ -38,8 +39,9 @@ public class ReviewCommand extends Command {
 			businessImpl.reviewProduct(productId, evaluatorId, score);
 		} catch (NumberFormatException e) {
 			System.out.println("[ERROR] You didn't inserted a well behaved number. You will be redirected back to the main menu");
-		} catch (Exception e) {
-			System.out.println("[ERROR] Oops! A fatal error occured! You will be redirected back to the main menu");
+		} catch (BusinessException e) {
+			System.out.println("[ERROR] Oops! A business error occured! You will be redirected back to the main menu");
+			System.out.println("[ERROR] " + e);
 		}
 	}
 	

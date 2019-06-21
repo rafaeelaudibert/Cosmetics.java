@@ -1,6 +1,7 @@
 package cosmetics.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.Category;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
@@ -29,7 +31,7 @@ public class GroupTest {
 	Evaluation evaluation1;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws BusinessException {
 		// Definindo categorias para teste
 		ddCream 		= new Category("DD Cream");
 		ccCream 		= new Category("CC Cream");
@@ -189,33 +191,33 @@ public class GroupTest {
 
 	//Testando o m�todo allocate
 	@Test
-	public void allocateTestNormalAllocationFirstProduct() throws Exception{
+	public void allocateTestNormalAllocationFirstProduct() throws BusinessException {
 		//O primeiro produto da lista de produtos � alocado
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(laRocheCCCream).get(0).getReviewer().equals(userJoao));
 	}
 
 	@Test
-	public void allocateTestNormalAllocationMiddleProduct() throws Exception{
+	public void allocateTestNormalAllocationMiddleProduct() throws BusinessException {
 		//Produtos internos da lista de produtos s�o alocados
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(yvesRocherPowderSPF15).get(0).getReviewer().equals(userJoana));
 	}
 	@Test
-	public void allocateTestNormalAllocationLastProduct() throws Exception{
+	public void allocateTestNormalAllocationLastProduct() throws BusinessException {
 		//O �tlimo produto da lista de produtos � alocado
 		spfA.allocate(2);
 		assert(spfA.getEvaluations().get(naturaSPF20RostoMatte).get(1).getReviewer().equals(userMiguel));
 	}
 	@Test
-	public void allocateTestNotEnoughUsersToCoverProduct() throws Exception{
+	public void allocateTestNotEnoughUsersToCoverProduct() throws BusinessException {
 		//N�o aloca usuarios a mais quando faltam usuarios para completar a aloca��o
 		groupNEUsers.allocate(3);
 		assertTrue(groupNEUsers.getEvaluations().get(productNotCovered).size() < 3);
 	}
 	
-	@Test(expected=Exception.class)
-	public void allocateTestAlreadyAllocated() throws Exception{
+	@Test(expected = BusinessException.class)
+	public void allocateTestAlreadyAllocated() throws BusinessException {
 		//N�o pode alocar um grupo que j� est� alocado
 		spfA.allocate(2);
 		spfA.allocate(1);
@@ -223,7 +225,7 @@ public class GroupTest {
 
 	//Testando o m�todo evaluationDone
 	@Test
-	public void evaluationDoneTestComplete() throws Exception{
+	public void evaluationDoneTestComplete() throws BusinessException {
 		//Evaluations foram completas
 		groupNEUsers.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
@@ -232,44 +234,46 @@ public class GroupTest {
 	}
 	
 	@Test
-	public void evaluationDoneTestNotComplete() throws Exception{
+	public void evaluationDoneTestNotComplete() throws BusinessException {
 		//Evaluations n�o foram completas
 		groupNEUsers.allocate(2);
 		assertFalse(groupNEUsers.evaluationDone());
 	}
 	
 	@Test 
-	public void evalluationDoneTestPartiallyComplete() throws Exception{
+	public void evalluationDoneTestPartiallyComplete() throws BusinessException {
 		spfA.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
 		evaluations.get(laRocheCCCream).get(0).setScore(1);
 		assertFalse(spfA.evaluationDone());
 	}
 	@Test
-	public void evaluationDoneTestNoEvaluation() throws Exception{
+	public void evaluationDoneTestNoEvaluation() throws BusinessException {
 		//N�o h� evaluations
 		assertFalse(groupNEUsers.evaluationDone());
 	}
 	
 	//Testando os m�todos getAcceptableProducts e getNotAcceptableProducts
 	@Test
-	public void getAceptableProductsTestAllAccepted() throws Exception{
+	public void getAceptableProductsTestAllAccepted() throws BusinessException {
 		//Todo produto � aceito
 		groupNEUsers.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
 		evaluations.get(productNotCovered).get(0).setScore(3);
 		assert(groupNEUsers.getAcceptableProducts().contains(productNotCovered));
 	}
+	
 	@Test
-	public void getNotAceptableProductsTestAllAccepted() throws Exception{
+	public void getNotAceptableProductsTestAllAccepted() throws BusinessException {
 		//Nenhum produto � rejeitado
 		groupNEUsers.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = groupNEUsers.getEvaluations();
 		evaluations.get(productNotCovered).get(0).setScore(3);
 		assert(groupNEUsers.getNotAcceptableProducts().size() == 0);
 	}
+	
 	@Test
-	public void getAcceptableProductsTestSomeAccepted() throws Exception{
+	public void getAcceptableProductsTestSomeAccepted() throws BusinessException {
 		spfA.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
 		List<Product> expectedAcceptableProducts = new ArrayList<Product>();
@@ -298,7 +302,7 @@ public class GroupTest {
 	}
 	
 	@Test
-	public void getNotAcceptableProductsTestSomeAccepted() throws Exception{
+	public void getNotAcceptableProductsTestSomeAccepted() throws BusinessException {
 		spfA.allocate(2);
 		Map<Product,List<Evaluation>> evaluations = spfA.getEvaluations();
 		List<Product> expectedNotAcceptableProducts = new ArrayList<Product>();

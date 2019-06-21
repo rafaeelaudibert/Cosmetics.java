@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.Category;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
@@ -17,7 +18,7 @@ public class Database {
 	private List<User> users;
 	private List<Product> products;
 	
-	public Database() throws Exception {				
+	public Database() throws BusinessException {				
 		// Create pre-defined Category instances
 		categories = new ArrayList<Category>();
 		categories.add(new Category("DD Cream"));

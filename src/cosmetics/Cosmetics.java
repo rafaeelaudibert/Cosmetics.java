@@ -3,10 +3,8 @@ import cosmetics.ui.*;
 
 public final class Cosmetics {
 
-	public static void main(String[] args) {
-		final AppUI UI = new AppUI();
-		
-		UI.createAndShowUI();
+	public static void main(String[] args) {		
+		new AppUI().createAndShowUI();
 	}
 
 }

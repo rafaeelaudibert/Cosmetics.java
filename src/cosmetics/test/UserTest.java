@@ -1,6 +1,7 @@
 package cosmetics.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.Category;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
@@ -28,7 +30,7 @@ public class UserTest {
 	Evaluation evalJoseCreamProduct;
 
 	@Before
-	public void setUp() throws Exception{
+	public void setUp() throws BusinessException {
 		// Definindo categorias para teste
 		cream = new Category("creme");
 		lotion = new Category("locao");
@@ -105,49 +107,48 @@ public class UserTest {
 	}
 
 	// Testando addEvaluationGroup
-	@Test(expected=Exception.class)
-	public void addGroupNotInGroupTest() throws Exception {
-		// UserJoao já deve estar no grupo C
-		userJoao.addGroup(groupC);
+	@Test(expected = BusinessException.class)
+	public void addGroupNotInGroupTest() throws BusinessException {
+		userJoao.addGroup(groupC); // UserJoao is already in group C
 	}
 
-	@Test(expected=Exception.class)
-	public void addGroupTestNullAddition() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addGroupTestNullAddition() throws BusinessException {
 		userJoao.addGroup(null);
 	}
 
 	@Test
-	public void addGroupTestRepeatAddition() throws Exception {
+	public void addGroupTestRepeatAddition() throws BusinessException {
 		userJoao.addGroup(groupB);
 		assertTrue(userJoao.getGroups().contains(groupB));
 	}
 
 	// Testando addEvaluation
-	@Test(expected=NullPointerException.class)
-	public void addEvaluationTestNull() throws Exception{
+	@Test(expected = BusinessException.class)
+	public void addEvaluationTestNull() throws BusinessException {
 		userJoao.addEvaluation(null);
 	}
 
-	@Test(expected=Exception.class)
-	public void addEvaluationTestWrongUser() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addEvaluationTestWrongUser() throws BusinessException {
 		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct);
 		userJoao.addEvaluation(evalMateusCreamProduct);
 	}
 
-	@Test(expected=Exception.class)
-	public void addEvaluationTestIncompatibleProduct() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addEvaluationTestIncompatibleProduct() throws BusinessException {
 		evalJoaoShampooProduct = new Evaluation(userJoao, shampooProduct);
 		userJoao.addEvaluation(evalJoaoShampooProduct);
 	}
 
-	@Test(expected=Exception.class)
-	public void addEvaluationTestNotExistingGroup() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addEvaluationTestNotExistingGroup() throws BusinessException {
 		evalMateusCreamProduct = new Evaluation(userMateus, creamProduct);
 		userMateus.addEvaluation(evalMateusCreamProduct);
 	}
 
 	@Test
-	public void addEvaluationTestNormalAddition() throws Exception {
+	public void addEvaluationTestNormalAddition() throws BusinessException {
 		evalJoseCreamProduct = new Evaluation(userJose, creamProduct);
 		userJose.addEvaluation(evalJoseCreamProduct);
 		assertTrue(userJose.getEvaluationsFromGroup(evalJoseCreamProduct.getGroup()).contains(evalJoseCreamProduct));

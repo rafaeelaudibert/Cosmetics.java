@@ -1,6 +1,7 @@
 package cosmetics.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.Category;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
@@ -22,7 +24,7 @@ public class ProductTest {
 	Group group;
 
 	@Before
-	public void setUp() throws Exception{
+	public void setUp() throws BusinessException {
 		// Definindo categorias para teste
 		creamCategory = new Category("creme");
 		lotionCategory = new Category("locao");
@@ -63,31 +65,31 @@ public class ProductTest {
 	
 	// Testando addEvaluation
 	@Test
-	public void addEvaluationValid() throws Exception {		
+	public void addEvaluationValid() throws BusinessException {		
 		int old_size = cream.getEvaluations().size();
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 				
-		// cream.addEvaluation(evaluation); // Não rodamos essa linha de código, pois new Evaluation já roda isso
+		// cream.addEvaluation(evaluation); // We don't need to run this LOC, because new Evaluation already calls this function
 		
 		assertTrue(cream.getEvaluations().contains(evaluation));
 		assertTrue(cream.getEvaluations().size() > old_size);
 	}
 	
-	@Test(expected=NullPointerException.class)
-	public void addEvaluationNull() {		
+	@Test(expected = BusinessException.class)
+	public void addEvaluationNull() throws BusinessException {		
 		cream.addEvaluation(null);
 	}
 	
-	@Test(expected=Exception.class)
-	public void addEvaluationNonPermittedUser() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addEvaluationNonPermittedUser() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
 		shampoo.addEvaluation(evaluation);
 		assertFalse(shampoo.getEvaluations().contains(evaluation));
 	}
 	
-	@Test(expected=Exception.class)
-	public void addEvaluationWrongProduct() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addEvaluationWrongProduct() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, shampoo);
 		
 		lotion.addEvaluation(evaluation);
@@ -97,7 +99,7 @@ public class ProductTest {
 	// Test addScore
 	
 	@Test
-	public void addScoreValid() throws Exception {
+	public void addScoreValid() throws BusinessException {
 		int SCORE = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
@@ -107,21 +109,21 @@ public class ProductTest {
 		assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == SCORE);
 	}
 	
-	@Test(expected=Exception.class)
-	public void addScoreWithEmptyUser() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addScoreWithEmptyUser() throws BusinessException {
 		cream.addScore(null, 0);
 	}
 	
-	@Test(expected=Exception.class)
-	public void addScoreWithNullScore() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addScoreWithNullScore() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
 		cream.addEvaluation(evaluation);		
 		cream.addScore(userJoao, null);
 	}
 	
-	@Test(expected=Exception.class)
-	public void addScoreWithLowerScore() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addScoreWithLowerScore() throws BusinessException {
 		int LOWER_BOUND = -3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
@@ -129,8 +131,8 @@ public class ProductTest {
 		cream.addScore(userJoao, LOWER_BOUND - 1);
 	}
 	
-	@Test(expected=Exception.class)
-	public void addScoreWithHigherScore() throws Exception {
+	@Test(expected = BusinessException.class)
+	public void addScoreWithHigherScore() throws BusinessException {
 		int UPPER_BOUND = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
@@ -139,7 +141,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void addScoreWithLowerBoundScore() throws Exception {
+	public void addScoreWithLowerBoundScore() throws BusinessException {
 		int LOWER_BOUND = -3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
@@ -149,7 +151,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void addScoreWithUpperBoundScore() throws Exception {
+	public void addScoreWithUpperBoundScore() throws BusinessException {
 		int UPPER_BOUND = 3;
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		
@@ -160,7 +162,7 @@ public class ProductTest {
 	
 	// Test getAverageScore
 	@Test
-	public void getAverageScoreValid() throws Exception {
+	public void getAverageScoreValid() throws BusinessException {
 		Evaluation evaluation1 = new Evaluation(userJoao, cream);
 		Evaluation evaluation2 = new Evaluation(userMateus, cream);
 		
@@ -180,7 +182,7 @@ public class ProductTest {
 	
 	// Test isAcceptable
 	@Test
-	public void isAcceptableValidTrue() throws Exception {
+	public void isAcceptableValidTrue() throws BusinessException {
 		Evaluation evaluation1 = new Evaluation(userJoao, cream);
 		Evaluation evaluation2 = new Evaluation(userMateus, cream);
 		
@@ -194,7 +196,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void isAcceptableValidFalse() throws Exception {
+	public void isAcceptableValidFalse() throws BusinessException {
 		Evaluation evaluation1 = new Evaluation(userJoao, cream);
 		Evaluation evaluation2 = new Evaluation(userMateus, cream);
 		
@@ -208,7 +210,7 @@ public class ProductTest {
 	}
 	
 	@Test
-	public void isAcceptableValidLimit() throws Exception {
+	public void isAcceptableValidLimit() throws BusinessException {
 		Evaluation evaluation1 = new Evaluation(userJoao, cream);
 		Evaluation evaluation2 = new Evaluation(userMateus, cream);
 		
@@ -223,7 +225,7 @@ public class ProductTest {
 	
 	// Test getEvaluations
 	@Test
-	public void getEvaluationsValid() throws Exception {
+	public void getEvaluationsValid() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		cream.addEvaluation(evaluation);
 		
@@ -232,7 +234,7 @@ public class ProductTest {
 	
 	// Test getEvaluationFromUser
 	@Test
-	public void getEvaluationFromUserValid() throws Exception {
+	public void getEvaluationFromUserValid() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, cream);
 		cream.addEvaluation(evaluation);
 		

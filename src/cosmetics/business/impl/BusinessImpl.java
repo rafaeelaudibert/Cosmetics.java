@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import cosmetics.business.Business;
+import cosmetics.business.BusinessException;
 import cosmetics.business.Evaluation;
 import cosmetics.business.Group;
 import cosmetics.business.Product;
@@ -18,26 +19,26 @@ public class BusinessImpl implements Business {
 	public BusinessImpl() {
 		try {
 			this.database = new Database();
-		} catch (Exception e) {
+		} catch (BusinessException e) {
 			System.out.println("[ERROR] Error when creating database");
 			e.printStackTrace();
 		}
 	}
 	
 	// First stage
-	public void allocate(Integer groupIndex, Integer numMembers) throws Exception {
+	public void allocate(Integer groupIndex, Integer numMembers) throws BusinessException {
 		List<Group> groups = database.getNonAllocatedGroups();
 		
 		// If the index is not in the allowed range, throw an exception to be caught upstream
 		if (groupIndex <= 0 || groupIndex > groups.size()) {
-			throw new NumberFormatException();
+			throw new BusinessException("The group index passed as parameter is not a valid index");
 		}
 
 		groups.get(groupIndex-1).allocate(numMembers);
 	}
 	
 	// Second stage
-	public void reviewProduct(Integer productId, Integer evaluatorId, Integer score) throws Exception {
+	public void reviewProduct(Integer productId, Integer evaluatorId, Integer score) throws BusinessException {
 		Product product = database.getProduct(productId);
 		User evaluator = database.getUser(evaluatorId);
 		
@@ -45,12 +46,12 @@ public class BusinessImpl implements Business {
 	}
 	
 	// Third stage
-	public void showGroupProducts(Integer groupIndex) {
+	public void showGroupProducts(Integer groupIndex) throws BusinessException {
 		List<Group> groups = database.getGroups();
 		
 		// If the index is not in the allowed range, throw an exception to be caught upstream
 		if (groupIndex <= 0 || groupIndex > groups.size()) {
-			throw new NumberFormatException();
+			throw new BusinessException("The group index passed as parameter is not a valid index");
 		}
 		
 		Group group = groups.get(groupIndex - 1);

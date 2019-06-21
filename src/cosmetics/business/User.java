@@ -23,18 +23,17 @@ public class User {
 		this.groups = new ArrayList<Group>();
 	}
 
-	public void addEvaluation(Evaluation evaluation) throws Exception {
+	public void addEvaluation(Evaluation evaluation) throws BusinessException {
 		if (evaluation == null) {
-			throw new NullPointerException("Avaliacao null");
+			throw new BusinessException("Evaluation passed as parameter cannot be null", new NullPointerException());
 		} else if (evaluation.getReviewer() != this) {
-			throw new Exception("Evaluation does not belong to this user");
+			throw new BusinessException("Evaluation does not belong to this user");
 		} else if (!this.canEvaluate(evaluation.getProduct())) {
-			throw new Exception("This user cannot evaluate this product");
+			throw new BusinessException("This user cannot evaluate this product");
 		} else if (!this.groups.contains(evaluation.getGroup())) {
-			throw new Exception("This user is not in the group of this evaluation");
+			throw new BusinessException("This user does not belong the group of this evaluation");
 		} else {
-			this.evaluations.get(evaluation.getGroup()).add(evaluation);
-			
+			this.evaluations.get(evaluation.getGroup()).add(evaluation);			
 		}
 
 	}
@@ -43,25 +42,25 @@ public class User {
 		if (product == null) {
 			return false;
 		}
+		
 		if (!(this.categories.contains(product.getCategory()))) {
-		//	System.out.println("Não posso avaliar, ele não está nas minhas categorias");
 			return false;
 		}
 
 		if (this.state == product.getRequester().getState()) {
-		//	System.out.println("Não posso avaliar, sou do mesmo estado que o requester");
 			return false;
 		}
+		
 		return true;
 	}
 
-	public void addGroup(Group group) throws Exception {
+	public void addGroup(Group group) throws BusinessException {
 		
 		if (group == null) {
-			throw new NullPointerException("This group is null");
+			throw new BusinessException("The group passed as parameter cannot be null");
 		}
 		if (!group.getMembers().contains(this)) {
-			throw new Exception("This member is not in this group");
+			throw new BusinessException("This member does not belong to the group passed as parameter");
 		}
 		if (!this.groups.contains(group)) {
 			int old_size = this.evaluations.size();
@@ -86,7 +85,6 @@ public class User {
 	}
 	
 	public List<Evaluation> getEvaluationsFromGroup(Group group) {
-	//	System.out.println(this.evaluations.get(group).size());
 		return this.evaluations.get(group);
 	}
 

@@ -41,16 +41,17 @@ public class Group {
 			Evaluation evaluation = new Evaluation(reviewer, product); // Already configures the evaluations to the Product and the User
 			evaluations.get(product).add(evaluation);
 		} catch (Exception e) {
-			System.out.println("[ERROR] Error when adding evaluation for " + product.getName() + ". Probably incompatible with the User.");
+			System.out.println("[ERROR] Error when adding evaluation for " + product.getName() + ". Probably incompatible with the User with ID " + reviewer.getId());
 		}
 	}
 
-	public void allocate(int numMembers) throws Exception {
+	public void allocate(int numMembers) throws BusinessException {
 		// If the group is already allocated, throw an exception
 		if (this.isAllocated()) {
-			throw new Exception("Group already allocated");
+			throw new BusinessException("This group has already been allocated");
 		}
-		// Para cada produto, realiza a alocação
+		
+		// For each product, allocates
 		for (Product product : getOrderedProducts()) {
 
 			List<User> reviewers = getOrderedCandidateReviewers(product);
@@ -59,7 +60,7 @@ public class Group {
 
 			for (int i = 0; i < Math.min(reviewers.size(), numMembers); i++) {
 				this.addEvaluation(product, reviewers.get(i));
-				System.out.println("Product with ID "+product.getId()+" allocated to user with ID "+reviewers.get(i).getId());
+				System.out.println("[INFO] Product with ID " + product.getId() + " allocated to user with ID " + reviewers.get(i).getId());
 			}
 		}
 		
@@ -135,6 +136,6 @@ public class Group {
 	
 	@Override
 	public String toString() {
-		return "Group " + name + " | Allocated: " + allocated;
+		return "Group " + name + "\t| Allocated: " + this.isAllocated() + "\t| Evaluations completed: " + this.evaluationDone();
 	}
 }

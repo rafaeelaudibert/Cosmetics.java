@@ -2,6 +2,7 @@ package cosmetics.ui.command;
 
 import java.util.Scanner;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.impl.BusinessImpl;
 
 public class ShowCommand extends Command {
@@ -25,6 +26,9 @@ public class ShowCommand extends Command {
 			businessImpl.showGroupProducts(groupIndex);
 		} catch (NumberFormatException e) {
 			System.out.println("[ERROR] You didn't inserted a well behaved index. You will be redirected to the main menu");
+		} catch (BusinessException e) {
+			System.out.println("[ERROR] Oops! A business error occured! You will be redirected back to the main menu");
+			System.out.println("[ERROR] " + e);
 		}
 	}
 	

@@ -10,7 +10,7 @@ public class Evaluation {
 	private static Integer MINIMUM_SCORE = -3;
 	private static Integer MAXIMUM_SCORE = 3;
 
-	public Evaluation(User reviewer, Product product) throws Exception {
+	public Evaluation(User reviewer, Product product) throws BusinessException {
 		this.group = product.getGroup();
 		this.product = product;
 		this.reviewer = reviewer;
@@ -28,17 +28,17 @@ public class Evaluation {
 		return true;
 	}
 
-	public void setScore(Integer score) throws Exception {
+	public void setScore(Integer score) throws BusinessException {
 		if (this.score != null) {
-			throw new Exception(); 
+			throw new BusinessException("This evaluation has already been given an score"); 
 		}
 		
 		if (score == null) {
-			throw new Exception(); 
+			throw new BusinessException("The score passed as parameter cannot be null", new NullPointerException()); 
 		}
 				
 		if (score < MINIMUM_SCORE || score > MAXIMUM_SCORE) {
-			throw new Exception(); 
+			throw new BusinessException("The score passed as parameter must be in the interval [" + MINIMUM_SCORE + ", " + MAXIMUM_SCORE + "]"); 
 		}
 		
 		this.score = score;
@@ -58,5 +58,10 @@ public class Evaluation {
 	
 	public Integer getScore() {
 		return this.score;
+	}
+	
+	@Override
+	public String toString() {
+		return "Evaluation \t| User: " + getReviewer().getId() + "\t| Product: " + getProduct().getId() + "\t| Grade: " + (isDone() ? getScore() : "-");
 	}
 }

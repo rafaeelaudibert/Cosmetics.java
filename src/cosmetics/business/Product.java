@@ -23,29 +23,26 @@ public class Product {
 		this.evaluations = new HashMap<>();
 	}
 
-	public void addEvaluation(Evaluation evaluation) {
-		//System.out.println("[Product.addEvaluation]: Vou inserir "+evaluation.getProduct().getName()+" "+evaluation.getReviewer().getName());
+	public void addEvaluation(Evaluation evaluation) throws BusinessException {
 		if (evaluation == null) {
-			throw new NullPointerException(); // Should be changed to a custom exception
+			throw new BusinessException("Evaluation passed as parameter cannot be null", new NullPointerException());
 		} 
 		
 		if (evaluation.getProduct() != this) {
-			// throw new CustomException(); // Should be changed to a custom exception
-			return;
+			throw new BusinessException("This product is not related to the evaluation passed as parameter"); 
 		} 
 		
 		if (!evaluation.getReviewer().canEvaluate(this)) {
-			// throw new NullPointerException(); // Should be changed to a custom exception
-			return;
+			throw new BusinessException("The evaluation's passed as parameter reviewer cannot evaluate this product");
 		}  
-		//System.out.println("Consegui");
+		
 		this.evaluations.put(evaluation.getReviewer(), evaluation);
 		
 	}
 	
-	public void addScore(User user, Integer score) throws Exception {
+	public void addScore(User user, Integer score) throws BusinessException {
 		if (user == null) {
-			throw new Exception(); // Should be changed to a custom exception
+			throw new BusinessException("The user passed as parameter cannot be null");
 		}
 		
 		evaluations.get(user).setScore(score);
@@ -94,10 +91,10 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product " + id + ": " + name + " | Category: " + category + " | Requester: " + requester + " | Group: " + group.getName();
+		return "Product " + id + ": " + name + "\t| Category: " + category + "\t| Requester: " + requester + "\t| Group: " + group.getName();
 	}
 	
 	public String toStringWithGrade() {
-		return "Product " + id + ": " + name + " | Grade: " + this.getAverageScore();
+		return "Product " + id + ": " + name + "\t| Grade: " + this.getAverageScore();
 	}
 }

@@ -2,6 +2,7 @@ package cosmetics.ui.command;
 
 import java.util.Scanner;
 
+import cosmetics.business.BusinessException;
 import cosmetics.business.impl.BusinessImpl;
 
 public class AllocateCommand extends Command {
@@ -30,17 +31,17 @@ public class AllocateCommand extends Command {
 				numMembers = Integer.parseInt(scanner.nextLine());
 			} while (numMembers < MINIMUM_MEMBERS_ALLOCATED || numMembers > MAXIMUM_MEMBERS_ALLOCATED);		
 			
-			System.out.println("Starting allocation...");
+			System.out.println("[INFO] Starting allocation...");
 			
 			businessImpl.allocate(groupIndex, numMembers);
 			
-			System.out.println("End of allocation.");
+			System.out.println("[INFO] End of allocation.");
 			
 		} catch (NumberFormatException e) {
 			System.out.println("[ERROR] You didn't inserted a well behaved number. You will be redirected to the main menu");
-		} catch (Exception e) {
-			System.out.println("[ERROR] Oops! A fatal error occured! You will be redirected back to the main menu");
-			System.out.println(e);
+		} catch (BusinessException e) {
+			System.out.println("[ERROR] Oops! A business error occured! You will be redirected back to the main menu");
+			System.out.println("[ERROR] " + e);
 		}
 	}
 	
