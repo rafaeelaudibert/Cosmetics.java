@@ -65,7 +65,11 @@ public class Product {
 		return new ArrayList<Evaluation>(evaluations.values());
 	}
 	
-	public Evaluation getEvaluationFromUser(User user) {
+	public Evaluation getEvaluationFromUser(User user) throws BusinessException {
+		
+		if (user == null)
+			throw new BusinessException("User passed as parameter cannot be null");
+		
 		return evaluations.get(user);
 	}
 

@@ -22,6 +22,9 @@ public class ProductTest {
 	Category creamCategory, lotionCategory, shampooCategory;
 	Product cream, lotion, shampoo;
 	Group group;
+	
+	static Integer LOWER_BOUND = -3;
+	static Integer UPPER_BOUND = 3;
 
 	@Before
 	public void setUp() throws BusinessException {
@@ -65,158 +68,132 @@ public class ProductTest {
 
 	// Test addEvaluation
 	@Test
-	public void addEvaluationValid() throws BusinessException {
+	public void addEvaluationValidTest() throws BusinessException {
 		Integer old_size = cream.getEvaluations().size();
 		Evaluation evaluation = new Evaluation(userJoao, cream);
-
-		// cream.addEvaluation(evaluation); // We don't need to run this LOC, because
-		// new Evaluation already calls this function
+		
+		// We don't need to run this LOC, because new Evaluation already calls this function in a valid way
+		// cream.addEvaluation(evaluation);
 
 		assertTrue(cream.getEvaluations().contains(evaluation));
 		assertTrue(cream.getEvaluations().size() > old_size);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addEvaluationNull() throws BusinessException {
+	public void addEvaluationNullTest() throws BusinessException {
 		cream.addEvaluation(null);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addEvaluationNonPermittedUser() throws BusinessException {
-		Evaluation evaluation = new Evaluation(userJoao, shampoo);
-
-		shampoo.addEvaluation(evaluation);
-		assertFalse(shampoo.getEvaluations().contains(evaluation));
-	}
-
-	@Test(expected = BusinessException.class)
-	public void addEvaluationWrongProduct() throws BusinessException {
-		Evaluation evaluation = new Evaluation(userJoao, shampoo);
-
-		lotion.addEvaluation(evaluation);
+	public void addEvaluationNonPermittedUserTest() throws BusinessException {
+		Evaluation evaluation = null;
+		
+		try {
+			evaluation = new Evaluation(userJoao, shampoo);
+		} catch (BusinessException e) {
+			assertFalse(shampoo.getEvaluations().contains(evaluation));
+			throw e;
+		}
 	}
 
 	// Test addScore
 	@Test
-	public void addScoreValid() throws BusinessException {
+	public void addScoreValidTest() throws BusinessException {
 		Integer SCORE = 3;
-		Evaluation evaluation = new Evaluation(userJoao, cream);
-
-		cream.addEvaluation(evaluation);
+		new Evaluation(userJoao, cream); // Already calls cream.addEvaluation(this);
 
 		cream.addScore(userJoao, SCORE);
 		assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == SCORE);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addScoreWithEmptyUser() throws BusinessException {
+	public void addScoreWithEmptyUserTest() throws BusinessException {
 		cream.addScore(null, 0);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addScoreWithNullScore() throws BusinessException {
-		Evaluation evaluation = new Evaluation(userJoao, cream);
-
-		cream.addEvaluation(evaluation);
+	public void addScoreWithNullScoreTest() throws BusinessException {
+		new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
+ 
 		cream.addScore(userJoao, null);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addScoreWithLowerScore() throws BusinessException {
-		Integer LOWER_BOUND = -3;
-		Evaluation evaluation = new Evaluation(userJoao, cream);
+	public void addScoreWithLowerScoreTest() throws BusinessException {
+		new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation);
 		cream.addScore(userJoao, LOWER_BOUND - 1);
 	}
 
 	@Test(expected = BusinessException.class)
-	public void addScoreWithHigherScore() throws BusinessException {
-		Integer UPPER_BOUND = 3;
-		Evaluation evaluation = new Evaluation(userJoao, cream);
+	public void addScoreWithHigherScoreTest() throws BusinessException {
+		new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation);
 		cream.addScore(userJoao, UPPER_BOUND + 1);
 	}
 
 	@Test
-	public void addScoreWithLowerBoundScore() throws BusinessException {
-		Integer LOWER_BOUND = -3;
-		Evaluation evaluation = new Evaluation(userJoao, cream);
+	public void addScoreWithLowerBoundScoreTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation);
 		cream.addScore(userJoao, LOWER_BOUND);
-		assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == LOWER_BOUND);
+		assertTrue(evaluation.getScore() == LOWER_BOUND);
 	}
 
 	@Test
-	public void addScoreWithUpperBoundScore() throws BusinessException {
-		Integer UPPER_BOUND = 3;
-		Evaluation evaluation = new Evaluation(userJoao, cream);
+	public void addScoreWithUpperBoundScoreTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation);
 		cream.addScore(userJoao, UPPER_BOUND);
-		assertTrue(cream.getEvaluationFromUser(userJoao).getScore() == UPPER_BOUND);
+		assertTrue(evaluation.getScore() == UPPER_BOUND);
 	}
 
 	// Test getAverageScore
 	@Test
-	public void getAverageScoreValid() throws BusinessException {
-		Evaluation evaluation1 = new Evaluation(userJoao, cream);
-		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+	public void getAverageScoreValidTest() throws BusinessException {
+		new Evaluation(userJoao, cream);    // Already calls cream.addEvaluation(this);
+		new Evaluation(userMateus, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation1);
 		cream.addScore(userJoao, -2);
-
-		cream.addEvaluation(evaluation2);
 		cream.addScore(userMateus, 1);
 
 		assertTrue(cream.getAverageScore() == (-2.0 + 1.0) / 2.0);
 	}
 
 	@Test
-	public void getAverageScoreZeroEvaluations() {
+	public void getAverageScoreZeroEvaluationsTest() {
 		assertTrue(cream.getAverageScore().isNaN());
 	}
 
 	// Test isAcceptable
 	@Test
-	public void isAcceptableValidTrue() throws BusinessException {
-		Evaluation evaluation1 = new Evaluation(userJoao, cream);
-		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+	public void isAcceptableValidTrueTest() throws BusinessException {
+		new Evaluation(userJoao, cream);  	 // Already calls cream.addEvaluation(this);
+		new Evaluation(userMateus, cream);  // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation1);
 		cream.addScore(userJoao, 3);
-
-		cream.addEvaluation(evaluation2);
 		cream.addScore(userMateus, 0);
 
 		assertTrue(cream.isAcceptable());
 	}
 
 	@Test
-	public void isAcceptableValidFalse() throws BusinessException {
-		Evaluation evaluation1 = new Evaluation(userJoao, cream);
-		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+	public void isAcceptableValidFalseTest() throws BusinessException {
+		new Evaluation(userJoao, cream);   // Already calls cream.addEvaluation(this);
+		new Evaluation(userMateus, cream); // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation1);
 		cream.addScore(userJoao, -3);
-
-		cream.addEvaluation(evaluation2);
 		cream.addScore(userMateus, 0);
 
 		assertFalse(cream.isAcceptable());
 	}
 
 	@Test
-	public void isAcceptableValidLimit() throws BusinessException {
-		Evaluation evaluation1 = new Evaluation(userJoao, cream);
-		Evaluation evaluation2 = new Evaluation(userMateus, cream);
+	public void isAcceptableValidLimitTest() throws BusinessException {
+		new Evaluation(userJoao, cream);   // Already calls cream.addEvaluation(this);
+		new Evaluation(userMateus, cream); // Already calls cream.addEvaluation(this);
 
-		cream.addEvaluation(evaluation1);
 		cream.addScore(userJoao, -3);
-
-		cream.addEvaluation(evaluation2);
 		cream.addScore(userMateus, 3);
 
 		assertTrue(cream.isAcceptable());
@@ -224,20 +201,25 @@ public class ProductTest {
 
 	// Test getEvaluations
 	@Test
-	public void getEvaluationsValid() throws BusinessException {
-		Evaluation evaluation = new Evaluation(userJoao, cream);
-		cream.addEvaluation(evaluation);
+	public void getEvaluationsValidTest() throws BusinessException {
+		Integer old_list_size = cream.getEvaluations().size();
+		Evaluation evaluation = new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
 		assertTrue(cream.getEvaluations().contains(evaluation));
+		assertTrue(old_list_size + 1 == cream.getEvaluations().size());
 	}
 
 	// Test getEvaluationFromUser
 	@Test
-	public void getEvaluationFromUserValid() throws BusinessException {
-		Evaluation evaluation = new Evaluation(userJoao, cream);
-		cream.addEvaluation(evaluation);
+	public void getEvaluationFromUserValidTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, cream);  // Already calls cream.addEvaluation(this);
 
 		assertTrue(cream.getEvaluationFromUser(userJoao) == evaluation);
+	}
+	
+	@Test(expected = BusinessException.class)
+	public void getEvaluationFromUserNullTest() throws BusinessException {
+		cream.getEvaluationFromUser(null);
 	}
 
 }

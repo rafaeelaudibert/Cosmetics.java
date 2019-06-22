@@ -2,6 +2,7 @@ package cosmetics.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,10 @@ public class EvaluationTest {
 	List<Category> categoryListCream;
 	Product creamProduct;
 	Group groupA;
+	
+	// Static values
+	static Integer LOWER_LIMIT = -3;
+	static Integer UPPER_LIMIT = 3;
 
 	@Before
 	public void setUp() throws BusinessException {
@@ -61,30 +66,57 @@ public class EvaluationTest {
 
 		assertFalse(evaluation.isDone());
 	}
+	
+	@Test(expected = BusinessException.class)
+	public void isDoneFalseWithExceptionTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
+		
+		try {
+			evaluation.setScore(-5);
+		} catch (BusinessException e) {
+			assertFalse(evaluation.isDone());
+			throw e;
+		}
+	}
 
 	// Test setScore
+	@Test
+	public void setScoreTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
+
+		evaluation.setScore(0);
+		assertTrue(evaluation.getScore() == 0);
+	}
+	
 	@Test(expected = BusinessException.class)
 	public void setScoreSmallerValueTest() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
 
-		evaluation.setScore(-5);
+		evaluation.setScore(LOWER_LIMIT - 1);
 	}
 
 	@Test
-	public void setScoreLowLimitTest() throws BusinessException {
+	public void setScoreLowerLimitTest() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
 
-		evaluation.setScore(-3);
-		assertTrue(evaluation.getScore() == -3);
+		evaluation.setScore(LOWER_LIMIT);
+		assertTrue(evaluation.getScore() == LOWER_LIMIT);
 	}
 
 	@Test
-	public void setScoreHighLimitTest() throws BusinessException {
+	public void setScoreHigherLimitTest() throws BusinessException {
 		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
 
-		evaluation.setScore(3);
-		assertTrue(evaluation.getScore() == 3);
+		evaluation.setScore(UPPER_LIMIT);
+		assertTrue(evaluation.getScore() == UPPER_LIMIT);
 	}
+	
+	@Test(expected = BusinessException.class)
+	public void setScoreHigherValueTest() throws BusinessException {
+		Evaluation evaluation = new Evaluation(userJoao, creamProduct);
+
+		evaluation.setScore(UPPER_LIMIT + 1);
+	}	
 
 	@Test(expected = BusinessException.class)
 	public void setScoreAfterSetTest() throws BusinessException {
