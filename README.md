@@ -1,11 +1,11 @@
-# Cosmetics
+# :lipstick: Cosmetics
 Java application using Software Engineering techniques to build a Cosmetics avaliation system.
 
 This system was actually build for the Program Construction Techniques (INF01120) course at [INF](https://inf.ufrgs.br) - [UFRGS](https://ufrgs.br)
 
-## Assignment Definition
+## :memo: Assignment Definition
 
-### Introduction
+### :page_with_curl: Introduction
 The cosmetic industry is highly lucrative. A big quantity of products is released frequently, and the consumer market is pretty big. In order for consumers to better assess which products are worthwhile,
 a platform was created where products of a certain category can be evaluated.
 
@@ -20,7 +20,7 @@ Your objective is to develop an application which can help the committee coordin
 The initial data insertion is done directly in the database, and new products register will not be implemented in this application version.
 
 
-### Features
+### :sparkles: Features
 
 The application contains three features, described below:
 
@@ -48,15 +48,7 @@ The application contains three features, described below:
  
     g. If the products already have the number of evaluators as asked by the user, the algorithm finishes. Else, it returns to the step `a`.
 
-5. System saves the allocation, and displays to the user an allocation group list of products, and a log in the following way:
-    
-    a. Starting the allocation.
-    
-    b. Product id X allocated to the evaluator id Y
-    
-    c. [...]
-    
-    d. Allocation end.
+5. System saves the allocation, and displays to the user an allocation group list of products, as well as a log descibring the allocation.
 
 
 **Product scores attribution**
@@ -77,7 +69,7 @@ The application contains three features, described below:
 a. Products with average score >= 0, are displayed in the list with acceptable quality products, in descending order.
 b. Products with average score < 0, are displayed in the list with inacceptable quality products, in ascending order.
 
-## Implementation
+## :computer: Implementation
 
 The project was developed using TDD (Test-Driven Development) where the tests were created before the code implementation.
 
@@ -85,7 +77,7 @@ The system should be implemented in Java, and the unit tests should be done with
 
 The unit embrace the domain classes only, without actually testing the UI or the Service classes.
 
-## Authors
+## :busts_in_silhouette: Authors
 
 Code developed at [INF](https://inf.ufrgs.br)-[UFRGS](https://ufrgs.br) with Java, using Github, Astah and JUnit by:
 * Bruno Trindade
