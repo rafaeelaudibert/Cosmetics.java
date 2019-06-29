@@ -1,4 +1,7 @@
-# Final Assignment - INF01120 - Program Construction Techniques
+# Cosmetics
+Java application using Software Engineering techniques to build a Cosmetics avaliation system.
+
+This system was actually build for the Program Construction Techniques (INF01120) course at [INF](https://inf.ufrgs.br) - [UFRGS](https://ufrgs.br)
 
 ## Assignment Definition
 
@@ -19,7 +22,7 @@ The initial data insertion is done directly in the database, and new products re
 
 ### Features
 
-The application must have three features, descibred below:
+The application contains three features, described below:
 
 **Allocation of Products to Members of the Evaluation Committee**
 1. User (a evaluator committee coordinator) requests the system an allocation of products to members of the evaluation committee
@@ -76,11 +79,11 @@ b. Products with average score < 0, are displayed in the list with inacceptable 
 
 ## Implementation
 
-The application should be implementend AND tested. The development must use a test-oriented approach, this is, based in the UML project, unit tests (automated) should be created before the code implementation. After, the implementation should be performed, and the application tested based in the tests created before.
+The project was developed using TDD (Test-Driven Development) where the tests were created before the code implementation.
 
 The system should be implemented in Java, and the unit tests should be done with the tool JUnit.
 
-The unit tests should necessarily embrace the domain classes, and interface or database-related classes doesn't need to be tested.
+The unit embrace the domain classes only, without actually testing the UI or the Service classes.
 
 ## Authors
 
