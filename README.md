@@ -1,8 +1,11 @@
-# Final Assignment - INF01120 - Program Construction Techniques
+# :lipstick: Cosmetics
+Java application using Software Engineering techniques to build a Cosmetics avaliation system.
 
-## Assignment Definition
+This system was actually build for the Program Construction Techniques (INF01120) course at [INF](https://inf.ufrgs.br) - [UFRGS](https://ufrgs.br)
 
-### Introduction
+## :memo: Assignment Definition
+
+### :page_with_curl: Introduction
 The cosmetic industry is highly lucrative. A big quantity of products is released frequently, and the consumer market is pretty big. In order for consumers to better assess which products are worthwhile,
 a platform was created where products of a certain category can be evaluated.
 
@@ -17,9 +20,9 @@ Your objective is to develop an application which can help the committee coordin
 The initial data insertion is done directly in the database, and new products register will not be implemented in this application version.
 
 
-### Features
+### :sparkles: Features
 
-The application must have three features, descibred below:
+The application contains three features, described below:
 
 **Allocation of Products to Members of the Evaluation Committee**
 1. User (a evaluator committee coordinator) requests the system an allocation of products to members of the evaluation committee
@@ -45,15 +48,7 @@ The application must have three features, descibred below:
  
     g. If the products already have the number of evaluators as asked by the user, the algorithm finishes. Else, it returns to the step `a`.
 
-5. System saves the allocation, and displays to the user an allocation group list of products, and a log in the following way:
-    
-    a. Starting the allocation.
-    
-    b. Product id X allocated to the evaluator id Y
-    
-    c. [...]
-    
-    d. Allocation end.
+5. System saves the allocation, and displays to the user an allocation group list of products, as well as a log descibring the allocation.
 
 
 **Product scores attribution**
@@ -74,15 +69,15 @@ The application must have three features, descibred below:
 a. Products with average score >= 0, are displayed in the list with acceptable quality products, in descending order.
 b. Products with average score < 0, are displayed in the list with inacceptable quality products, in ascending order.
 
-## Implementation
+## :computer: Implementation
 
-The application should be implementend AND tested. The development must use a test-oriented approach, this is, based in the UML project, unit tests (automated) should be created before the code implementation. After, the implementation should be performed, and the application tested based in the tests created before.
+The project was developed using TDD (Test-Driven Development) where the tests were created before the code implementation.
 
 The system should be implemented in Java, and the unit tests should be done with the tool JUnit.
 
-The unit tests should necessarily embrace the domain classes, and interface or database-related classes doesn't need to be tested.
+The unit embrace the domain classes only, without actually testing the UI or the Service classes.
 
-## Authors
+## :busts_in_silhouette: Authors
 
 Code developed at [INF](https://inf.ufrgs.br)-[UFRGS](https://ufrgs.br) with Java, using Github, Astah and JUnit by:
 * Bruno Trindade
